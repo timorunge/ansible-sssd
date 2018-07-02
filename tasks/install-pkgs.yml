@@ -1,0 +1,7 @@
+---
+
+- name: Install SSSD packages
+  package:
+    name: "{{ sssd_pkgs }}"
+    state: present
+    update_cache: "{{ omit if ansible_pkg_mgr == 'dnf' else 'yes' }}"

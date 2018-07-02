@@ -1,0 +1,11 @@
+---
+
+- name: Configure SSSD service
+  template:
+    dest: /etc/sssd/sssd.conf
+    group: root
+    mode: 0400
+    owner: root
+    src: sssd.conf.j2
+  notify:
+    - restart sssd service

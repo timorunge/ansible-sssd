@@ -1,0 +1,31 @@
+---
+
+galaxy_info:
+  author: Timo Runge
+  description: Installing and configuring the SSSD service.
+  role_name: sssd
+  license: BSD
+  min_ansible_version: 2.4
+  platforms:
+  - name: EL
+    versions:
+      - 7
+  - name: Debian
+    versions:
+      - all
+  - name: Fedora
+    versions:
+      - 26
+      - 27
+      - 28
+  - name: Ubuntu
+    versions:
+      - trusty
+      - xenial
+      - artful
+      - bionic
+  galaxy_tags:
+    - authorization
+    - sssd
+
+dependencies: []

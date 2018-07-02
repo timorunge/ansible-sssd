@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+{% for section in sssd_config.keys() %}
+[{{ section }}]
+{% for key, value in sssd_config[section].iteritems() %}
+{{ key }} = {{ value }}
+{% endfor %}
+
+{% endfor %}

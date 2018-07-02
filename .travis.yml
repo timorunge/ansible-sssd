@@ -1,0 +1,27 @@
+---
+
+language: python
+python: 2.7
+
+sudo: true
+
+addons:
+  apt:
+    packages:
+      - python-apt
+      - python-pip
+
+install:
+  - pip install --upgrade pip setuptools
+  - pip install ansible==2.5.5
+  - pip install ansible-lint coverage junit-xml splitter
+  - ansible --version
+  - ansible-galaxy install timorunge.sssd --roles-path=./
+  - echo $'[defaults]\nroles_path=./' > ansible.cfg
+
+script:
+  - ansible-lint tasks/main.yml
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
