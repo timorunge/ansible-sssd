@@ -12,12 +12,18 @@ addons:
       - python-pip
 
 install:
-  - pip install --upgrade pip setuptools
-  - pip install ansible==2.5.5
-  - pip install ansible-lint coverage junit-xml splitter
+  - pip install --upgrade \
+    pip \
+    setuptools
+  - pip install --upgrade \
+    ansible-lint \
+    ansible==2.6.0 \
+    coverage \
+    junit-xml \
+    splitter
   - ansible --version
   - ansible-galaxy install timorunge.sssd --roles-path=./
-  - echo $'[defaults]\nroles_path=./' > ansible.cfg
+  - printf '[defaults]\nroles_path=./' > ansible.cfg
 
 script:
   - ansible-lint tasks/main.yml
