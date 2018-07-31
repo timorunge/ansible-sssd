@@ -1,33 +1,27 @@
 ---
 
-language: python
-python: 2.7
-
 sudo: true
 
-addons:
-  apt:
-    packages:
-      - python-apt
-      - python-pip
+env:
+  - DOCKER_COMPOSE_VERSION=1.22.0
+
+services:
+  - docker
 
 install:
-  - pip install --upgrade \
-    pip \
-    setuptools
-  - pip install --upgrade \
-    ansible-lint \
-    ansible==2.6.0 \
-    coverage \
-    junit-xml \
-    splitter
-  - ansible --version
-  - ansible-galaxy install timorunge.sssd --roles-path=./
-  - printf '[defaults]\nroles_path=./' > ansible.cfg
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
 
 script:
-  - ansible-lint tasks/main.yml
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - docker-compose -f .travis-docker-compose.yml config
+  - docker-compose -f .travis-docker-compose.yml pull
+  - docker-compose -f .travis-docker-compose.yml build
+  - docker-compose -f .travis-docker-compose.yml up --no-start
+  - docker-compose -f .travis-docker-compose.yml up
+  - docker-compose -f .travis-docker-compose.yml down
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

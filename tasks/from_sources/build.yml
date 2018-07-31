@@ -1,0 +1,21 @@
+---
+
+- name: Make SRPM
+  args:
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+  shell: "contrib/fedora/make_srpm.sh && yum-builddep -y rpmbuild/SRPMS/sssd-*.src.rpm"
+  when: >
+        ((sssd_checksum_catalog.changed) or
+        (sssd_source_files.changed) or
+        (sssd_patches.changed)) and
+        (ansible_os_family == "RedHat")
+
+- name: Build SSSD
+  args:
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+  shell: "autoreconf -i -f && ./configure {{ sssd_build_options | join(' ') }}"
+  when: >
+        (sssd_checksum_catalog.changed) or
+        (sssd_source_files.changed) or
+        (sssd_patches.changed)
+  register: sssd_build

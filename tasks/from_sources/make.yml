@@ -1,0 +1,20 @@
+---
+
+- name: Compile SSSD
+  make:
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+  when: sssd_build.changed
+  register: sssd_compile
+
+- name: Install SSSD
+  make:
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    target: install
+  when: sssd_compile.changed
+  notify:
+     - restart sssd
+     - systemctl daemon-reload
+
+- name: Run ldconfig
+  command: ldconfig
+  when: sssd_compile.changed

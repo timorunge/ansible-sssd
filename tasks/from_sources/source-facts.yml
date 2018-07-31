@@ -1,0 +1,11 @@
+---
+
+- name: Get Debian architecture
+  command: dpkg-architecture -qDEB_HOST_MULTIARCH
+  register: sssd_dpkg_architecture_exec
+  changed_when: sssd_dpkg_architecture_exec.rc != 0
+  when: ansible_os_family == "Debian"
+
+- set_fact:
+    sssd_dpkg_architecture: "{{ sssd_dpkg_architecture_exec.stdout }}"
+  when: ansible_os_family == "Debian"

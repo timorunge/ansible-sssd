@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+# Service enabled: {{ sssd_service_enabled | default(yes) }}
+[Unit]
+Description=System Security Services Daemon
+# SSSD must be running before we permit user sessions
+Before=systemd-user-sessions.service nss-user-lookup.target
+Wants=nss-user-lookup.target
+
+[Service]
+EnvironmentFile=-{{ sssd_environment_file }}
+ExecStart={{ sssd_prefix_dir }}/sbin/sssd -i -f
+Type=notify
+NotifyAccess=main
+
+[Install]
+WantedBy=multi-user.target

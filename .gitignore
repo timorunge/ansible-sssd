@@ -1,2 +1,2 @@
 tests/ansible.cfg
-tests/test.retry
+tests/*.retry

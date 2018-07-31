@@ -1,5 +1,18 @@
 ---
 
+- name: Gather OS specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_os_family }}-{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- include_tasks: facts.yml
+
 - include_tasks: install-pkgs.yml
+  when: not sssd_from_sources
+
+- include_tasks: from_sources/main.yml
+  when: sssd_from_sources
 
 - include_tasks: sssd-config.yml

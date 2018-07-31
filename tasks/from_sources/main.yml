@@ -1,0 +1,36 @@
+---
+
+- include_tasks: dependencies.yml
+
+- include_tasks: source-facts.yml
+
+- name: Generate checksum catalog
+  template:
+    dest: "{{ sssd_install_dir }}/tmp/ansible_checksum_catalog.yml"
+    mode: 0600
+    src: checksum_catalog.yml.j2
+
+- name: Check for changes in checksum catalog
+  ignore_errors: yes
+  command: "diff {{ sssd_install_dir }}/tmp/ansible_checksum_catalog.yml {{ sssd_install_dir }}/ansible_checksum_catalog.yml"
+  register: sssd_checksum_catalog
+  changed_when: sssd_checksum_catalog.rc != 0
+
+- include_tasks: prepare.yml
+
+- include_tasks: patch.yml
+
+- include_tasks: build.yml
+
+- include_tasks: make.yml
+
+- include_tasks: cleanup.yml
+
+- include_tasks: config.yml
+
+- name: Save checksum catalog
+  copy:
+    dest: "{{ sssd_install_dir }}/ansible_checksum_catalog.yml"
+    remote_src: yes
+    src: "{{ sssd_install_dir }}/tmp/ansible_checksum_catalog.yml"
+  when: sssd_from_sources

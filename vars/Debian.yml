@@ -1,0 +1,106 @@
+---
+
+# SSSD packages
+sssd_pkgs:
+  - sssd
+  - sssd-ad
+  - sssd-ad-common
+  - sssd-common
+  - sssd-ipa
+  - sssd-krb5
+  - sssd-krb5-common
+  - sssd-ldap
+  - sssd-proxy
+
+# SSSD build dependency packages
+sssd_build_dependency_pkgs:
+  - autoconf
+  - autopoint
+  - build-essential
+  - cifs-utils
+  - debhelper
+  - dh-apparmor
+  - dh-autoreconf
+  - dh-python
+  - dh-systemd
+  - dnsutils
+  - docbook-xml
+  - docbook-xsl
+  - dpkg-dev
+  - gcc
+  - git
+  - krb5-config
+  - libaugeas-dev
+  - libc-ares-dev
+  - libcmocka-dev
+  - libcollection-dev
+  - libcurl4-openssl-dev
+  - libdbus-1-dev
+  - libdhash-dev
+  - libglib2.0-dev
+  - libhttp-parser-dev
+  - libini-config-dev
+  - libjansson-dev
+  - libkeyutils-dev
+  - libkrb5-dev
+  - libldap2-dev
+  - libldb-dev
+  - libltdl-dev
+  - libnfsidmap-dev
+  - libnl-3-dev
+  - libnl-route-3-dev
+  - libnspr4-dev
+  - libnss-wrapper
+  - libnss3-dev
+  - libpam-dev
+  - libpcre3-dev
+  - libpopt-dev
+  - libsasl2-dev
+  - libselinux1-dev
+  - libsemanage1-dev
+  - libsmbclient-dev
+  - libsystemd-dev
+  - libtalloc-dev
+  - libtdb-dev
+  - libtevent-dev
+  - libuid-wrapper
+  - libxml2-utils
+  - lsb-release
+  - make
+  - python-dev
+  - python-setuptools
+  - python3-dev
+  - python3-setuptools
+  - quilt
+  - samba-dev
+  - systemd
+  - uuid-dev
+  - xml-core
+  - xsltproc
+
+# SSSD library directories
+sssd_krb5_plugin_path: "/usr/lib/{{ sssd_dpkg_architecture }}/krb5/plugins/krb5"
+sssd_ldb_lib_dir: "/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb"
+sssd_libdir: "/lib/{{ sssd_dpkg_architecture }}"
+sssd_nsslibdir: "/lib/{{ sssd_dpkg_architecture }}"
+sssd_pammoddir: "/lib/{{ sssd_dpkg_architecture }}/security"
+
+# SSSD delete files
+sssd_files_to_remove:
+  - "/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb/memberof.la"
+
+# SSSD directories
+sssd_dirs:
+  - /etc/sssd
+  - /etc/sssd/conf.d
+  - /var/lib/sss
+  - /var/lib/sss/db
+  - /var/lib/sss/deskprofile
+  - /var/lib/sss/gpo_cache
+  - /var/lib/sss/keytabs
+  - /var/lib/sss/mc
+  - /var/lib/sss/pipes
+  - /var/lib/sss/pipes/private
+  - /var/lib/sss/pubconf
+  - /var/lib/sss/pubconf/krb5.include.d
+  - /var/lib/sss/secrets

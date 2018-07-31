@@ -1,0 +1,56 @@
+---
+
+# SSSD packages
+sssd_pkgs:
+  - sssd
+  - sssd-ad
+  - sssd-client
+  - sssd-common
+  - sssd-dbus
+  - sssd-ipa
+  - sssd-krb5
+  - sssd-krb5-common
+  - sssd-ldap
+  - sssd-proxy
+  - sssd-tools
+
+# SSSD build dependency packages
+sssd_build_dependency_pkgs:
+  - git
+  - libcmocka-devel
+  - libldb-devel
+  - libpamtest-devel
+  - make
+  - nss_wrapper
+  - python34
+  - python34-devel
+  - rpm-build
+  - uid_wrapper
+  - yum-utils
+
+# SSSD library directories
+sssd_krb5_plugin_path: /usr/lib/krb5/plugins/libkrb5
+sssd_ldb_lib_dir: /usr/lib64/ldb/modules/ldb
+sssd_libdir: /usr/local/lib
+sssd_nsslibdir: "{{ sssd_libdir }}"
+sssd_pammoddir: "{{ sssd_libdir }}/security"
+
+# SSSD delete files
+sssd_files_to_remove:
+  - /usr/lib64/ldb/modules/ldb/memberof.la
+
+# SSSD directories
+sssd_dirs:
+  - /etc/sssd
+  - /etc/sssd/conf.d
+  - /var/lib/sss
+  - /var/lib/sss/db
+  - /var/lib/sss/deskprofile
+  - /var/lib/sss/gpo_cache
+  - /var/lib/sss/keytabs
+  - /var/lib/sss/mc
+  - /var/lib/sss/pipes
+  - /var/lib/sss/pipes/private
+  - /var/lib/sss/pubconf
+  - /var/lib/sss/pubconf/krb5.include.d
+  - /var/lib/sss/secrets

@@ -1,0 +1,23 @@
+---
+
+- name: Downloading SSSD source
+  get_url:
+    dest: "{{ sssd_install_dir }}/download/sssd-{{ sssd_version }}.tar.gz"
+    url: "{{ sssd_tarball_url }}"
+  register: sssd_source_download
+
+- name: Unpacking SSSD source
+  unarchive:
+    copy: no
+    dest: "{{ sssd_install_dir }}/build"
+    src: "{{ sssd_source_download.dest }}"
+    extra_opts:
+      - "--overwrite"
+  when: sssd_source_download.changed
+  register: sssd_source_files
+
+- name: git init
+  args:
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    creates: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}/.git/config"
+  shell: git config --global user.email "root@$(hostname)" && git init && git add . && git commit -m "init sssd {{ sssd_version }}"

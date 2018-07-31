@@ -1,0 +1,32 @@
+---
+
+- name: Install SSSD build dependencies
+  package:
+    name: "{{ sssd_build_dependency_pkgs | default(omit) }}"
+    state: present
+    update_cache: yes
+
+- name: Create SSSD group
+  group:
+    name: "{{ sssd_group }}"
+    state: present
+
+- name: Create SSSD user
+  user:
+    create_home: no
+    groups: "{{ sssd_group }}"
+    name: "{{ sssd_user }}"
+    shell: /bin/false
+
+- name: Create required directories
+  file:
+    group: "{{ sssd_group }}"
+    mode: 0755
+    owner: "{{ sssd_user }}"
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ sssd_dirs }}"
+    - "{{ sssd_install_dir }}/build"
+    - "{{ sssd_install_dir }}/download"
+    - "{{ sssd_install_dir }}/tmp"

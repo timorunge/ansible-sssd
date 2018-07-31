@@ -1,0 +1,7 @@
+---
+
+- name: Remove not required files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ sssd_files_to_remove }}"

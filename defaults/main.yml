@@ -1,6 +1,14 @@
 ---
 
-# Default SSSD config
+# General
+
+# Enable / disable SSSD as a service
+sssd_service_enabled: yes
+
+# Choose the config type: config (`sssd_config`) or file (`sssd_config_file`)
+sssd_config_type: config
+
+# Default SSSD config options
 sssd_config:
   'domain/example.com':
     access_provider: permit
@@ -16,14 +24,81 @@ sssd_config:
   session_recording:
     scope: all
 
-# SSSD packages
-sssd_pkgs:
-  - sssd
-  - sssd-ad
-  - sssd-ad-common
-  - sssd-common
-  - sssd-ipa
-  - sssd-krb5
-  - sssd-krb5-common
-  - sssd-ldap
-  - sssd-proxy
+# Default SSSD config from file
+sssd_config_file: sssd-example.conf
+
+# SSSD from source:
+
+# Install SSSD from sources:
+sssd_from_sources: false
+
+# User & group definition
+sssd_user: sssd
+sssd_group: sssd
+
+# Version definition:
+sssd_version: !!str 1_16_1
+
+# Define the download url:
+sssd_download_url: https://github.com/SSSD/sssd/archive
+
+# Final download url for the nginx tarball:
+sssd_tarball_url: "{{ sssd_download_url }}/sssd-{{ sssd_version }}.tar.gz"
+
+# The place where to unpack, configure, build and install SSSD:
+sssd_install_dir: /usr/local/src/sssd
+
+# Basic settings for building SSSD from sources.
+# Align them with your build options.
+
+# Install architecture-independent files in PREFIX
+sssd_prefix_dir: /usr
+
+# Install architecture-dependent files in EPREFIX
+sssd_exec_prefix: /usr
+
+# Where to store pid files for SSSD
+sssd_pid_path: /var/run
+
+# Where to store log files
+sssd_log_path: /var/log/sssd
+
+# Path to environment file
+sssd_environment_file: /etc/default/sssd
+
+# Templates
+
+# Gives the possibility to override the sssd systemd template
+sssd_service_template: sssd.service-{{ ansible_os_family }}.j2
+
+# Gives the possibility to override the sssd init script
+sssd_init_template: sssd.init-{{ ansible_os_family }}.j2
+
+# Patches
+
+# In this section you can apply custom patches to SSSD.
+# You can find one example in the README.md and in the tests directory.
+sssd_patches: []
+
+# Build options
+
+# The default values for the directories are defined either
+# in `defaults/main.yml` or `vars/{{ ansible_os_family }}.yml`
+sssd_build_options:
+  - "--prefix={{ sssd_prefix_dir }}"
+  - "--exec-prefix={{ sssd_exec_prefix }}"
+  - "--with-pid-path={{ sssd_pid_path }}"
+  - "--with-log-path={{ sssd_log_path }}"
+  - "--with-environment-file={{ sssd_environment_file }}"
+  - "--with-ldb-lib-dir={{ sssd_ldb_lib_dir }}"
+  - "--with-krb5-plugin-path={{ sssd_krb5_plugin_path }}"
+  - "--libdir={{ sssd_libdir }}"
+  - "--enable-nsslibdir={{ sssd_nsslibdir }}"
+  - "--enable-pammoddir={{ sssd_pammoddir }}"
+  - "--with-autofs"
+  - "--with-initscript=systemd"
+  - "--with-smb-idmap-interface-version=6"
+  - "--with-ssh"
+  - "--with-sssd-user={{ sssd_user }}"
+  - "--with-sudo"
+  - "--with-systemdunitdir=/lib/systemd/system"

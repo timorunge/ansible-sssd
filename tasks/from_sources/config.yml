@@ -1,0 +1,20 @@
+---
+
+- name: Create SSSD systemd configuration
+  template:
+    dest: /lib/systemd/system/sssd.service
+    mode: 0600
+    src: "{{ sssd_service_template }}"
+  when: ansible_service_mgr == "systemd"
+  notify:
+     - restart nginx
+     - systemctl daemon-reload
+
+- name: Create SSSD init script
+  template:
+    dest: /etc/init.d/sssd
+    mode: 0755
+    src: "{{ sssd_init_template }}"
+  notify:
+     - restart sssd
+     - systemctl daemon-reload

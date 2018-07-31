@@ -1,0 +1,81 @@
+---
+
+version: '2'
+services:
+  centos_7:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_CentOS_7
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  debian_9_4:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Debian_9.4
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  debian_10:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Debian_10
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  ubuntu_16_04:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Ubuntu_16.04
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  ubuntu_17_10:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Ubuntu_18.04
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  ubuntu_18_04:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Ubuntu_18.04
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml
+  ubuntu_18_10:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Ubuntu_18.10
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-sources.yml

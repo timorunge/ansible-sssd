@@ -1,0 +1,32 @@
+FROM ubuntu:18.04
+MAINTAINER Timo Runge
+
+ARG ANSIBLE_VERSION
+ARG ROLE_NAME
+ARG WORKDIR
+
+ENV ENV_ROLE_NAME=${ROLE_NAME}
+ENV ENV_WORKDIR=${WORKDIR}
+
+RUN apt-get update -y
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y --no-install-recommends \
+    curl \
+    python \
+    python-apt \
+    python-pip \
+    systemd
+RUN apt-get clean
+
+RUN pip install --upgrade pip setuptools
+RUN pip install ansible==${ANSIBLE_VERSION}
+RUN pip install ansible-lint coverage junit-xml splitter
+RUN ansible --version
+
+COPY ./ /etc/ansible/roles/${ROLE_NAME}
+COPY ./docker/docker-entrypoint.sh /
+COPY ./tests ${WORKDIR}
+
+WORKDIR ${WORKDIR}
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]

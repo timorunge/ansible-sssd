@@ -1,0 +1,6 @@
+---
+
+- name: Set SSSD service status
+  set_fact:
+    sssd_service_state: stopped
+  when: not sssd_service_enabled
