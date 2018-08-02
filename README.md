@@ -1,11 +1,11 @@
 sssd
 ====
 
-This role is installing and configuring the [SSSD](https://github.com/SSSD/sssd)
-service.
+This role is installing and configuring the
+[SSSD](https://github.com/SSSD/sssd) service.
 
-It's also providing the possibility to install and patch a custom SSSD version
-(from sources) according to your needs.
+It's also providing the possibility to install and patch a custom SSSD
+version (from sources) according to your needs.
 
 Requirements
 ------------
@@ -32,18 +32,18 @@ ansible-galaxy install timorunge.sssd
 Role Variables
 --------------
 
-This role is basically building out of a YAML hierarchy an working configuration
-file for the SSSD service.
+This role is basically building out of a YAML hierarchy an working
+configuration file for the SSSD service.
 
-The variables that can be passed to this role. You can find a brief description
-in this paragraph. For all variables, take a look at the
+The variables that can be passed to this role. You can find a brief
+description in this paragraph. For all variables, take a look at the
 [SSSD config options](#sssd-config-options).
 
 ```yaml
 # Enable / disable SSSD as a service
 sssd_service_enabled: yes
 
-# Choose the config type: config (`sssd_config`) or file (`sssd_config_file`)
+# Config type: config (`sssd_config`) or file (`sssd_config_src_file`)
 sssd_config_type: config
 
 # Default SSSD config options
@@ -54,16 +54,11 @@ sssd_config:
     id_provider: local
   sssd:
     config_file_version: 2
+    services: nss, pam
     domains: example.com
-  nss:
-    filter_groups: root
-    filter_users: root
-    homedir_substring: /home
-  session_recording:
-    scope: all
 
 # Default SSSD config from file
-sssd_config_file: sssd-example.conf
+sssd_config_src_file: sssd.example.conf
 
 # SSSD from source:
 
@@ -85,26 +80,8 @@ sssd_patches:
 
 # Build options
 
-# The default values for the directories are defined either
-# in `defaults/main.yml` or `vars/{{ ansible_os_family }}.yml`
-sssd_build_options:
-  - "--prefix={{ sssd_prefix_dir }}"
-  - "--exec-prefix={{ sssd_exec_prefix }}"
-  - "--with-pid-path={{ sssd_pid_path }}"
-  - "--with-log-path={{ sssd_log_path }}"
-  - "--with-environment-file={{ sssd_environment_file }}"
-  - "--with-ldb-lib-dir={{ sssd_ldb_lib_dir }}"
-  - "--with-krb5-plugin-path={{ sssd_krb5_plugin_path }}"
-  - "--libdir={{ sssd_libdir }}"
-  - "--enable-nsslibdir={{ sssd_nsslibdir }}"
-  - "--enable-pammoddir={{ sssd_pammoddir }}"
-  - "--with-autofs"
-  - "--with-initscript=systemd"
-  - "--with-smb-idmap-interface-version=6"
-  - "--with-ssh"
-  - "--with-sssd-user={{ sssd_user }}"
-  - "--with-sudo"
-  - "--with-systemdunitdir=/lib/systemd/system"
+# The default build options are stored in `vars/{{ ansible_os_family }}.yml`
+sssd_build_options: "{{ sssd_default_build_options }}"
 ```
 
 Examples
@@ -113,55 +90,77 @@ Examples
 To keep the document lean the compile options are stripped.
 You can find the SSSD build options in [this document](#sssd-build-options).
 
-## 1) Configure SSSD according to your needs
+### 1) Configure SSSD according to your needs
 
 ```yaml
 - hosts: all
   vars:
     sssd_config:
+      sssd:
+        config_file_version: 2
+        services: nss, pam
+        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
-      sssd:
-        config_file_version: 2
-        domains: example.com
-      nss:
-        filter_groups: root
-        filter_users: root
-        homedir_substring: /home
-      session_recording:
-        scope: all
   roles:
     - timorunge.sssd
 ```
 
-## 2) Build and configure SSSD according to your needs
+### 2) Build and configure SSSD according to your needs
 
-Beside the standard installation via packages it's also possible to build SSSD
-from sources (in this example for Debian based systems).
+Beside the standard installation via packages it's also possible to build
+SSSD from sources (in this example for Debian based systems).
 
 ```yaml
 - hosts: all
   vars:
     sssd_from_sources: true
     sssd_version: !!str 1_16_1
-    sssd_build_options:
-      - "--prefix={{ sssd_prefix_dir }}"
-      - "--exec-prefix={{ sssd_exec_prefix }}"
-      - "--with-pid-path={{ sssd_pid_path }}"
-      ...
+    sssd_default_build_options:
+      - "--datadir=/usr/share"
+      - "--disable-files-domain"
+      - "--disable-rpath"
+      - "--disable-silent-rules"
+      - "--disable-static"
+      - "--enable-krb5-locator-plugin"
+      - "--enable-nsslibdir=/lib/{{ sssd_dpkg_architecture }}"
+      - "--enable-pammoddir=/lib/{{ sssd_dpkg_architecture }}/security"
+      - "--enable-systemtap"
+      - "--includedir=/usr/local/include"
+      - "--infodir=/usr/local/share/info"
+      - "--libdir=/lib/{{ sssd_dpkg_architecture }}"
+      - "--libexecdir=/usr/local/lib/{{ sssd_dpkg_architecture }}"
+      - "--localstatedir=/var"
+      - "--mandir=/usr/local/share/man"
+      - "--prefix=/usr"
+      - "--sysconfdir=/etc"
+      - "--with-autofs"
+      - "--with-environment-file={{ sssd_environment_file }}"
+      - "--with-initscript=systemd"
+      - "--with-krb5-plugin-path=/usr/lib/{{ sssd_dpkg_architecture }}/krb5/plugins/libkrb5"
+      - "--with-ldb-lib-dir=/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb"
+      - "--with-log-path=/var/log/sssd"
+      - "--with-pid-path=/var/run"
+      - "--with-ssh"
+      - "--with-sssd-user={{ sssd_user }}"
+      - "--with-sudo"
+      - "--with-systemdunitdir=/lib/systemd/system"
     sssd_config:
+      sssd:
+        config_file_version: 2
+        services: nss, pam
+        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
-      ...
   roles:
     - timorunge.sssd
 ```
 
-## 3) Apply patches to the source
+### 3) Apply patches to the source
 
 ```yaml
 - hosts: all
@@ -173,42 +172,46 @@ from sources (in this example for Debian based systems).
         dest_file: Makefile.am
         patch_file: add_libsss_child.la_to_makefile.patch
         state: present
-    sssd_build_options:
-      - "--prefix={{ sssd_prefix_dir }}"
-      - "--exec-prefix={{ sssd_exec_prefix }}"
-      - "--with-pid-path={{ sssd_pid_path }}"
-      - ...
+    sssd_build_options: "{{ sssd_default_build_options }}"
     sssd_config:
+      sssd:
+        config_file_version: 2
+        services: nss, pam
+        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
-      ...
   roles:
     - timorunge.sssd
 ```
 
-## 4) Override init.d and systemd templates
+### 4) Override init.d and systemd templates
 
 ```yaml
 - hosts: all
   vars:
-    sssd_init_template: roles/sssd/templates/nginx.service.j2
-    sssd_service_template: roles/sssd/templates/nginx.init.j2
+    sssd_init_template: roles/sssd/templates/sssd.service.j2
+    sssd_service_template: roles/sssd/templates/sssd.init.j2
     sssd_config:
+      sssd:
+        config_file_version: 2
+        services: nss, pam
+        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
-      ...
   roles:
-    - timorunge.custom_nginx
+    - timorunge.sssd
 ```
 
 SSSD config options
 -------------------
 
-```yml
+```yaml
+# Format:
+# option: type, subtype, mandatory[, default]
 sssd_config:
   service:
     timeout: int, None, false
@@ -866,8 +869,8 @@ Testing
 
 [![Build Status](https://travis-ci.org/timorunge/ansible-sssd.svg?branch=master)](https://travis-ci.org/timorunge/ansible-sssd)
 
-Testing is done with [Docker Compose](https://docs.docker.com/compose/) which is
-bringing up the following containers:
+Testing is done with [Docker Compose](https://docs.docker.com/compose/) which
+is bringing up the following containers:
 
 * CentOS 7
 * Debian 9.4 (Stretch)
@@ -877,14 +880,14 @@ bringing up the following containers:
 * Ubuntu 18.04 (Bionic Beaver)
 * Ubuntu 18.10 (Cosmic Cuttlefish)
 
-Ansible 2.6.2 is installed on all containers and is applying a
-[test playbook](tests/test-from-sources.yml) locally.
+Ansible 2.6.2 is installed on all containers and is applying two test
+playbooks:
+
+* [test-from-pkgs.yml](tests/test-from-pkgs.yml)
+* [test-from-src.yml](tests/test-from-src.yml)
 
 For further details and additional checks take a look at the
 [Docker entrypoint](docker/docker-entrypoint.sh).
-
-The tests have the focus on the custom installation option which this module is
-providing.
 
 ```sh
 # Testing locally with docker-compose:
@@ -897,7 +900,7 @@ docker-compose down
 ```
 
 Since the build time on Travis is limited for public repositories the
-[automated tests](docker-compose-travis.yml) are limited to:
+[automated tests](.travis-docker-compose.yml) are limited to:
 
 * CentOS 7
 * Debian 9.4 (Stretch)

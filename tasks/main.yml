@@ -1,5 +1,8 @@
 ---
 
+- name: Gather general variables
+  include_vars: main.yml
+
 - name: Gather OS specific variables
   include_vars: "{{ item }}"
   with_first_found:

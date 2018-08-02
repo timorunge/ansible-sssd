@@ -5,68 +5,63 @@
 # Enable / disable SSSD as a service
 sssd_service_enabled: yes
 
-# Choose the config type: config (`sssd_config`) or file (`sssd_config_file`)
+# Choose the config type: config (`sssd_config`) or file (`sssd_config_src_file`)
 sssd_config_type: config
 
-# Default SSSD config options
+# SSSD config options
 sssd_config:
+  sssd:
+    config_file_version: 2
+    services: nss, pam
+    domains: example.com
   'domain/example.com':
     access_provider: permit
     auth_provider: local
     id_provider: local
-  sssd:
-    config_file_version: 2
-    domains: example.com
-  nss:
-    filter_groups: root
-    filter_users: root
-    homedir_substring: /home
-  session_recording:
-    scope: all
 
-# Default SSSD config from file
-sssd_config_file: sssd-example.conf
+# SSSD config from file
+sssd_config_src_file: sssd.example.conf
 
-# SSSD from source:
+# SSSD from source
 
-# Install SSSD from sources:
+# Install SSSD from sources
 sssd_from_sources: false
+
+# Version definition
+sssd_version: !!str 1_16_1
 
 # User & group definition
 sssd_user: sssd
 sssd_group: sssd
 
-# Version definition:
-sssd_version: !!str 1_16_1
-
-# Define the download url:
+# Define the download url
 sssd_download_url: https://github.com/SSSD/sssd/archive
 
-# Final download url for the nginx tarball:
+# Final download url for the SSSD tarball
 sssd_tarball_url: "{{ sssd_download_url }}/sssd-{{ sssd_version }}.tar.gz"
 
-# The place where to unpack, configure, build and install SSSD:
+# The place where to unpack, configure, build and install SSSD
 sssd_install_dir: /usr/local/src/sssd
 
-# Basic settings for building SSSD from sources.
-# Align them with your build options.
+# Files
 
-# Install architecture-independent files in PREFIX
-sssd_prefix_dir: /usr
+# Additional options that are passed to the SSSD Daemon, only used for
+# /etc/init.d/sssd
+sssd_environment_src_file: sssd.default
 
-# Install architecture-dependent files in EPREFIX
-sssd_exec_prefix: /usr
-
-# Where to store pid files for SSSD
-sssd_pid_path: /var/run
-
-# Where to store log files
-sssd_log_path: /var/log/sssd
-
-# Path to environment file
-sssd_environment_file: /etc/default/sssd
+# Logrotate file
+sssd_logrotate_src_file: sssd.logrotate
 
 # Templates
+
+# Possibility creeate additional directories
+# Format:
+# sssd_additional_dirs:
+#   '/var/log/sssd':
+#     group: "{{ sssd_group }}"
+#     mode: '0700'
+#     owner: "{{ sssd_user }}"
+sssd_additional_dirs: []
 
 # Gives the possibility to override the sssd systemd template
 sssd_service_template: sssd.service-{{ ansible_os_family }}.j2
@@ -82,23 +77,5 @@ sssd_patches: []
 
 # Build options
 
-# The default values for the directories are defined either
-# in `defaults/main.yml` or `vars/{{ ansible_os_family }}.yml`
-sssd_build_options:
-  - "--prefix={{ sssd_prefix_dir }}"
-  - "--exec-prefix={{ sssd_exec_prefix }}"
-  - "--with-pid-path={{ sssd_pid_path }}"
-  - "--with-log-path={{ sssd_log_path }}"
-  - "--with-environment-file={{ sssd_environment_file }}"
-  - "--with-ldb-lib-dir={{ sssd_ldb_lib_dir }}"
-  - "--with-krb5-plugin-path={{ sssd_krb5_plugin_path }}"
-  - "--libdir={{ sssd_libdir }}"
-  - "--enable-nsslibdir={{ sssd_nsslibdir }}"
-  - "--enable-pammoddir={{ sssd_pammoddir }}"
-  - "--with-autofs"
-  - "--with-initscript=systemd"
-  - "--with-smb-idmap-interface-version=6"
-  - "--with-ssh"
-  - "--with-sssd-user={{ sssd_user }}"
-  - "--with-sudo"
-  - "--with-systemdunitdir=/lib/systemd/system"
+# The default build options are stored in `vars/{{ ansible_os_family }}.yml`
+sssd_build_options: "{{ sssd_default_build_options }}"

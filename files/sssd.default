@@ -1,0 +1,5 @@
+# Defaults for sssd, installed at /etc/default/sssd by the maintainer scripts
+# This is only used for /etc/init.d/sssd
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="-D -f"

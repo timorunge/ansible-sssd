@@ -2,7 +2,7 @@
 
 version: '2'
 services:
-  centos_7:
+  centos_7_src:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_CentOS_7
@@ -12,8 +12,19 @@ services:
         WORKDIR: /ansible
     environment:
       TRAVIS: ${TRAVIS}
-      YML_TEST_FILE: test-from-sources.yml
-  debian_9_4:
+      YML_TEST_FILE: test-from-src.yml
+  centos_7_pkg:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_CentOS_7
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-pkgs.yml
+  debian_9_4_src:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_Debian_9.4
@@ -23,8 +34,19 @@ services:
         WORKDIR: /ansible
     environment:
       TRAVIS: ${TRAVIS}
-      YML_TEST_FILE: test-from-sources.yml
-  ubuntu_18_04:
+      YML_TEST_FILE: test-from-src.yml
+  debian_9_4_pkg:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Debian_9.4
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-pkgs.yml
+  ubuntu_18_04_src:
     build:
       context: .
       dockerfile: ./docker/Dockerfile_Ubuntu_18.04
@@ -34,4 +56,15 @@ services:
         WORKDIR: /ansible
     environment:
       TRAVIS: ${TRAVIS}
-      YML_TEST_FILE: test-from-sources.yml
+      YML_TEST_FILE: test-from-src.yml
+  ubuntu_18_04_pkg:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_Ubuntu_18.04
+      args:
+        ANSIBLE_VERSION: 2.6.2
+        ROLE_NAME: timorunge.sssd
+        WORKDIR: /ansible
+    environment:
+      TRAVIS: ${TRAVIS}
+      YML_TEST_FILE: test-from-pkgs.yml

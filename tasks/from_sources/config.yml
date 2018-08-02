@@ -1,14 +1,21 @@
 ---
 
+- name: Copy SSSD defaults file
+  copy:
+    dest: "{{ sssd_environment_file }}"
+    group: "{{ sssd_group }}"
+    mode: 0644
+    owner: "{{ sssd_user }}"
+    src: "{{ sssd_environment_src_file }}"
+
 - name: Create SSSD systemd configuration
   template:
     dest: /lib/systemd/system/sssd.service
-    mode: 0600
+    mode: 0644
     src: "{{ sssd_service_template }}"
-  when: ansible_service_mgr == "systemd"
   notify:
-     - restart nginx
-     - systemctl daemon-reload
+    - restart sssd
+    - systemctl daemon-reload
 
 - name: Create SSSD init script
   template:
@@ -16,5 +23,13 @@
     mode: 0755
     src: "{{ sssd_init_template }}"
   notify:
-     - restart sssd
-     - systemctl daemon-reload
+    - restart sssd
+    - systemctl daemon-reload
+
+- name: Copy SSSD logrotate file
+  copy:
+    dest: /etc/logrotate.d/sssd
+    group: root
+    mode: 0644
+    owner: root
+    src: "{{ sssd_logrotate_src_file }}"

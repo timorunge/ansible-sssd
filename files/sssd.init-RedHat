@@ -1,5 +1,4 @@
 #!/bin/sh
-# {{ ansible_managed }}
 #
 #
 # chkconfig: - 12 88
@@ -32,11 +31,11 @@ prog="sssd"
 # Source function library.
 . /etc/init.d/functions
 
-if [ -f {{ sssd_environment_file }} ]; then
-    . {{ sssd_environment_file }}
+if [ -f /etc/default/sssd ]; then
+    . /etc/default/sssd
 fi
 
-SSSD={{ sssd_exec_prefix }}/sbin/sssd
+SSSD=/usr/sbin/sssd
 
 LOCK_FILE=/var/lock/subsys/sssd
 PID_FILE=/var/run/sssd.pid

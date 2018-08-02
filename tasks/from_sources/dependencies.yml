@@ -18,15 +18,11 @@
     name: "{{ sssd_user }}"
     shell: /bin/false
 
-- name: Create required directories
+- name: Create directories
   file:
-    group: "{{ sssd_group }}"
-    mode: 0755
-    owner: "{{ sssd_user }}"
-    path: "{{ item }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+    owner: "{{ item.value.owner }}"
+    path: "{{ item.key }}"
     state: directory
-  with_items:
-    - "{{ sssd_dirs }}"
-    - "{{ sssd_install_dir }}/build"
-    - "{{ sssd_install_dir }}/download"
-    - "{{ sssd_install_dir }}/tmp"
+  with_dict: "{{ sssd_dirs | combine(sssd_additional_dirs) }}"

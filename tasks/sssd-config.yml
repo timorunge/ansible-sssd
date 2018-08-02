@@ -1,23 +1,35 @@
 ---
 
+- name: Copy SSSD init script
+  copy:
+    dest: /etc/init.d/sssd
+    group: root
+    mode: 0755
+    owner: root
+    src: "sssd.init-{{ ansible_os_family }}"
+  notify:
+    - restart sssd
+  when: not sssd_from_sources and
+        ansible_os_family == "RedHat"
+
 - name: Configure SSSD service (from config)
   template:
     dest: /etc/sssd/sssd.conf
-    group: sssd
-    mode: 0400
-    owner: sssd
+    group: root
+    mode: 0600
+    owner: root
     src: sssd.conf.j2
   when: sssd_config_type == "config"
   notify:
     - restart sssd
 
 - name: Configure SSSD service (from file)
-  file:
+  copy:
     dest: /etc/sssd/sssd.conf
-    group: sssd
-    mode: 0400
-    owner: sssd
-    src: "{{ sssd_config_file }}"
+    group: root
+    mode: 0600
+    owner: root
+    src: "{{ sssd_config_src_file }}"
   when: sssd_config_type == "file"
   notify:
     - restart sssd

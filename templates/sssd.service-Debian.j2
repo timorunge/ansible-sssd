@@ -8,7 +8,7 @@ Wants=nss-user-lookup.target
 
 [Service]
 EnvironmentFile=-{{ sssd_environment_file }}
-ExecStart={{ sssd_prefix_dir }}/sbin/sssd -i -f
+ExecStart={{ sssd_exec_prefix }}/sbin/sssd -i -f
 Type=notify
 NotifyAccess=main
 

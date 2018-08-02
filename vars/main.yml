@@ -1,0 +1,4 @@
+---
+
+# Path to environment file
+sssd_environment_file: /etc/default/sssd

@@ -22,8 +22,8 @@ DESCRIPTION="System Security Services Daemon"
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
 NAME=sssd
 DAEMON_OPTS=""
-DAEMON={{ sssd_prefix_dir }}/sbin/$NAME
-PIDFILE={{ sssd_pid_path }}/$NAME.pid
+DAEMON={{ sssd_exec_prefix }}/sbin/$NAME
+PIDFILE=/var/run/$NAME.pid
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh

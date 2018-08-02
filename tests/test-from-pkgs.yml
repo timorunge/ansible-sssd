@@ -6,19 +6,14 @@
 
   vars:
     sssd_config:
+      sssd:
+        config_file_version: 2
+        services: nss, pam
+        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
-      sssd:
-        config_file_version: 2
-        domains: example.com
-      nss:
-        filter_groups: root
-        filter_users: root
-        homedir_substring: /home
-      session_recording:
-        scope: all
 
   roles:
     - timorunge.sssd

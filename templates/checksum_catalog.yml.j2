@@ -1,15 +1,13 @@
 # {{ ansible_managed }}
 
 sssd_build_options: {{ sssd_build_options | hash('sha1') }}
-sssd_dirs: {{ sssd_dirs | hash('sha1') }}
 sssd_download_url: {{ sssd_download_url | hash('sha1') }}
-sssd_environment_file: {{ sssd_environment_file | hash('sha1') }}
 sssd_exec_prefix: {{ sssd_exec_prefix | hash('sha1') }}
+sssd_files_to_remove: {{ sssd_files_to_remove | hash('sha1') }}
 sssd_from_sources: {{ sssd_from_sources | hash('sha1') }}
+sssd_group: {{ sssd_group | hash('sha1') }}
 sssd_install_dir: {{ sssd_install_dir | hash('sha1') }}
-sssd_log_path: {{ sssd_log_path | hash('sha1') }}
 sssd_patches: {{ sssd_patches | hash('sha1') }}
-sssd_pid_path: {{ sssd_pid_path | hash('sha1') }}
-sssd_prefix_dir: {{ sssd_prefix_dir | hash('sha1') }}
 sssd_tarball_url: {{ sssd_tarball_url | hash('sha1') }}
+sssd_user: {{ sssd_user | hash('sha1') }}
 sssd_version: {{ sssd_version | hash('sha1') }}

@@ -9,10 +9,10 @@ Wants=nss-user-lookup.target
 [Service]
 Environment=DEBUG_LOGGER=--logger=files
 EnvironmentFile=-{{ sssd_environment_file }}
-ExecStart={{ sssd_prefix_dir }}/sbin/sssd -i ${DEBUG_LOGGER}
+ExecStart={{ sssd_exec_prefix }}/sbin/sssd -i ${DEBUG_LOGGER}
 Type=notify
 NotifyAccess=main
-PIDFile={{ sssd_pid_path }}/sssd.pid
+PIDFile=/var/run/sssd.pid
 
 [Install]
 WantedBy=multi-user.target

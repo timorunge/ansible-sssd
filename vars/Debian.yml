@@ -30,6 +30,7 @@ sssd_build_dependency_pkgs:
   - gcc
   - git
   - krb5-config
+  - krb5-multidev
   - libaugeas-dev
   - libc-ares-dev
   - libcmocka-dev
@@ -74,33 +75,68 @@ sssd_build_dependency_pkgs:
   - quilt
   - samba-dev
   - systemd
+  - systemtap-sdt-dev
   - uuid-dev
   - xml-core
   - xsltproc
 
-# SSSD library directories
-sssd_krb5_plugin_path: "/usr/lib/{{ sssd_dpkg_architecture }}/krb5/plugins/krb5"
-sssd_ldb_lib_dir: "/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb"
-sssd_libdir: "/lib/{{ sssd_dpkg_architecture }}"
-sssd_nsslibdir: "/lib/{{ sssd_dpkg_architecture }}"
-sssd_pammoddir: "/lib/{{ sssd_dpkg_architecture }}/security"
-
-# SSSD delete files
+# Delete files
 sssd_files_to_remove:
   - "/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb/memberof.la"
 
-# SSSD directories
+# Directories
 sssd_dirs:
-  - /etc/sssd
-  - /etc/sssd/conf.d
-  - /var/lib/sss
-  - /var/lib/sss/db
-  - /var/lib/sss/deskprofile
-  - /var/lib/sss/gpo_cache
-  - /var/lib/sss/keytabs
-  - /var/lib/sss/mc
-  - /var/lib/sss/pipes
-  - /var/lib/sss/pipes/private
-  - /var/lib/sss/pubconf
-  - /var/lib/sss/pubconf/krb5.include.d
-  - /var/lib/sss/secrets
+  "{{ sssd_install_dir }}/build":
+    group: root
+    mode: !!str 0755
+    owner: root
+  "{{ sssd_install_dir }}/download":
+    group: root
+    mode: !!str 0755
+    owner: root
+  "{{ sssd_install_dir }}/tmp":
+    group: root
+    mode: !!str 0755
+    owner: root
+  '/etc/sssd':
+    group: "{{ sssd_group }}"
+    mode: !!str 0711
+    owner: "{{ sssd_user }}"
+  '/var/log/sssd':
+    group: "{{ sssd_group }}"
+    mode: !!str 0700
+    owner: "{{ sssd_user }}"
+
+# Install architecture-dependent files in EPREFIX
+sssd_exec_prefix: /usr
+
+# SSSD default build options
+sssd_default_build_options:
+  - "--datadir=/usr/share"
+  - "--disable-files-domain"
+  - "--disable-rpath"
+  - "--disable-silent-rules"
+  - "--disable-static"
+  - "--enable-krb5-locator-plugin"
+  - "--enable-nsslibdir=/lib/{{ sssd_dpkg_architecture }}"
+  - "--enable-pammoddir=/lib/{{ sssd_dpkg_architecture }}/security"
+  - "--enable-systemtap"
+  - "--includedir=/usr/local/include"
+  - "--infodir=/usr/local/share/info"
+  - "--libdir=/lib/{{ sssd_dpkg_architecture }}"
+  - "--libexecdir=/usr/local/lib/{{ sssd_dpkg_architecture }}"
+  - "--localstatedir=/var"
+  - "--mandir=/usr/local/share/man"
+  - "--prefix=/usr"
+  - "--sysconfdir=/etc"
+  - "--with-autofs"
+  - "--with-environment-file={{ sssd_environment_file }}"
+  - "--with-initscript=systemd"
+  - "--with-krb5-plugin-path=/usr/lib/{{ sssd_dpkg_architecture }}/krb5/plugins/libkrb5"
+  - "--with-ldb-lib-dir=/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb"
+  - "--with-log-path=/var/log/sssd"
+  - "--with-pid-path=/var/run"
+  - "--with-ssh"
+  - "--with-sssd-user={{ sssd_user }}"
+  - "--with-sudo"
+  - "--with-systemdunitdir=/lib/systemd/system"
