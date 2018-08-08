@@ -43,7 +43,8 @@ description in this paragraph. For all variables, take a look at the
 # Enable / disable SSSD as a service
 sssd_service_enabled: yes
 
-# Config type: config (`sssd_config`) or file (`sssd_config_src_file`)
+# Choose the config type: config (`sssd_config`), file (`sssd_config_src_file`)
+# or none (disable sssd.conf generation)
 sssd_config_type: config
 
 # Default SSSD config options
