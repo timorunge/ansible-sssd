@@ -1,0 +1,17 @@
+---
+
+- name: Pam auth update
+  ignore_errors: yes
+  command: pam-auth-update --package
+  register: sssd_pam_update
+  changed_when: sssd_pam_update.rc != 0
+  when: ansible_os_family == "Debian"
+
+- name: Set permissions
+  file:
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+    owner: "{{ item.value.owner }}"
+    path: "{{ item.key }}"
+  with_dict: "{{ sssd_postinst_set_permissions }}"
+  when: sssd_postinst_set_permissions

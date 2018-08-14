@@ -33,7 +33,7 @@ sssd_version: !!str 1_16_1
 
 # User & group definition
 sssd_user: sssd
-sssd_group: sssd
+sssd_group: "{{ sssd_user }}"
 
 # Define the download url
 sssd_download_url: https://github.com/SSSD/sssd/archive
@@ -74,9 +74,12 @@ sssd_init_template: sssd.init-{{ ansible_os_family }}.j2
 
 # In this section you can apply custom patches to SSSD.
 # You can find one example in the README.md and in the tests directory.
-sssd_patches: []
+sssd_patches: "{{ sssd_default_patches }}"
 
 # Build options
+
+# Force a build
+sssd_force_build: false
 
 # The default build options are stored in `vars/{{ ansible_os_family }}.yml`
 sssd_build_options: "{{ sssd_default_build_options }}"

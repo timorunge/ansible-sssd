@@ -48,11 +48,19 @@ sssd_dirs:
     owner: root
   '/etc/sssd':
     group: "{{ sssd_group }}"
-    mode: !!str 0700
+    mode: !!str 0711
+    owner: "{{ sssd_user }}"
+  '/etc/sssd/conf.d':
+    group: "{{ sssd_group }}"
+    mode: !!str 0711
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
     owner: "{{ sssd_user }}"
   '/var/log/sssd':
     group: "{{ sssd_group }}"
-    mode: !!str 0700
+    mode: !!str 0750
     owner: "{{ sssd_user }}"
 
 # Install architecture-dependent files in EPREFIX
@@ -61,25 +69,120 @@ sssd_exec_prefix: /usr/local
 # SSSD default build options
 sssd_default_build_options:
   - "--disable-rpath"
+  - "--disable-silent-rules"
   - "--disable-static"
+  - "--enable-krb5-locator-plugin"
   - "--enable-nfsidmaplibdir=/usr/lib64/libnfsidmap"
   - "--enable-nsslibdir=/usr/lib64"
+  - "--enable-pac-responder"
   - "--enable-pammoddir=/usr/lib64/security"
+  - "--libdir=/usr/lib64"
+  - "--libexecdir=/usr/libexec"
   - "--enable-sss-default-nss-plugin"
   - "--enable-systemtap"
   - "--with-ad-gpo-default=permissive"
+  - "--with-autofs"
   - "--with-db-path=/var/lib/sss/db"
+  - "--with-environment-file={{ sssd_environment_file }}"
   - "--with-gpo-cache-path=/var/lib/sss/gpo_cache"
   - "--with-init-dir=/etc/init.d"
   - "--with-initscript=systemd"
   - "--with-kcm"
+  - "--with-krb5-conf=/etc/krb5.conf"
+  - "--with-krb5-plugin-path=/usr/lib64/krb5/plugins/libkrb5"
   - "--with-krb5-rcache-dir=/var/cache/krb5rcache"
   - "--with-log-path=/var/log/sssd"
   - "--with-mcache-path=/var/lib/sss/mc"
   - "--with-pid-path=/var/run"
   - "--with-pipe-path=/var/lib/sss/pipes"
+  - "--with-plugin-path=/usr/lib64/sssd"
   - "--with-pubconf-path=/var/lib/sss/pubconf"
-  - "--with-sssd-user={{ sssd_user }}"
+  - "--with-samba"
+  - "--with-secrets-db-path=/var/lib/sss/secrets"
+  - "--with-secrets"
+  - "--with-session-recording"
+  - "--with-ssh"
+  - "--with-sudo-lib-path=/usr/lib64"
+  - "--with-sudo"
   - "--with-syslog=journald"
   - "--with-test-dir=/dev/shm"
   - "--without-python3-bindings"
+
+# Set correct permissions for files and folders
+sssd_postinst_set_permissions:
+  '/etc/sssd':
+    group: "{{ sssd_group }}"
+    mode: !!str 0711
+    owner: "{{ sssd_user }}"
+  '/etc/sssd/conf.d':
+    group: "{{ sssd_group }}"
+    mode: !!str 0711
+    owner: "{{ sssd_user }}"
+  '/usr/libexec/sssd/gpo_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4750
+    owner: root
+  '/usr/libexec/sssd/krb5_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4750
+    owner: root
+  '/usr/libexec/sssd/ldap_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4750
+    owner: root
+  '/usr/libexec/sssd/p11_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4754
+    owner: root
+  '/usr/libexec/sssd/proxy_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4754
+    owner: root
+  '/usr/libexec/sssd/selinux_child':
+    group: "{{ sssd_group }}"
+    mode: !!str 4754
+    owner: root
+  '/usr/local/var/lib/sss/deskprofile':
+    group: "{{ sssd_group }}"
+    mode: !!str 0700
+    owner: "{{ sssd_user }}"
+  '/usr/local/var/lib/sss/keytabs':
+    group: "{{ sssd_group }}"
+    mode: !!str 751
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/db':
+    group: "{{ sssd_group }}"
+    mode: !!str 0700
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/gpo_cache':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/mc':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/pipes':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/pipes/private':
+    group: root
+    mode: !!str 0750
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/pubconf':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/pubconf/krb5.include.d':
+    group: "{{ sssd_group }}"
+    mode: !!str 0755
+    owner: "{{ sssd_user }}"
+  '/var/lib/sss/secrets':
+    group: root
+    mode: !!str 0700
+    owner: root
+  '/var/log/sssd':
+    group: "{{ sssd_group }}"
+    mode: !!str 0750
+    owner: "{{ sssd_user }}"

@@ -10,13 +10,16 @@
   group:
     name: "{{ sssd_group }}"
     state: present
+  when: sssd_group not in sssd_forbidden_groups
 
 - name: Create SSSD user
   user:
     create_home: no
     groups: "{{ sssd_group }}"
+    home: /var/lib/sss
     name: "{{ sssd_user }}"
-    shell: /bin/false
+    shell: /usr/sbin/nologin
+  when: sssd_group not in sssd_forbidden_users
 
 - name: Create directories
   file:

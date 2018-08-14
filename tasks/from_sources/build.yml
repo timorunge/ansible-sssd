@@ -7,7 +7,8 @@
   when: >
         ((sssd_checksum_catalog.changed) or
         (sssd_source_files.changed) or
-        (sssd_patches.changed)) and
+        (sssd_patches.changed) or
+        (sssd_force_build)) and
         (ansible_os_family == "RedHat")
 
 - name: Build SSSD
@@ -17,5 +18,6 @@
   when: >
         (sssd_checksum_catalog.changed) or
         (sssd_source_files.changed) or
-        (sssd_patches.changed)
+        (sssd_patches.changed) or
+        (sssd_force_build)
   register: sssd_build

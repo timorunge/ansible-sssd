@@ -121,18 +121,18 @@ SSSD from sources (in this example for Debian based systems).
     sssd_version: !!str 1_16_1
     sssd_default_build_options:
       - "--datadir=/usr/share"
-      - "--disable-files-domain"
       - "--disable-rpath"
       - "--disable-silent-rules"
       - "--disable-static"
       - "--enable-krb5-locator-plugin"
-      - "--enable-nsslibdir=/usr/lib/{{ sssd_dpkg_architecture }}"
-      - "--enable-pammoddir=/usr/lib/{{ sssd_dpkg_architecture }}/security"
+      - "--enable-nsslibdir=/lib/{{ sssd_dpkg_architecture }}"
+      - "--enable-pac-responder"
+      - "--enable-pammoddir=/lib/{{ sssd_dpkg_architecture }}/security"
       - "--enable-systemtap"
-      - "--includedir=/usr/local/include"
+      - "--includedir=/usr/include"
       - "--infodir=/usr/local/share/info"
       - "--libdir=/usr/lib/{{ sssd_dpkg_architecture }}"
-      - "--libexecdir=/usr/local/lib/{{ sssd_dpkg_architecture }}"
+      - "--libexecdir=/usr/lib/{{ sssd_dpkg_architecture }}"
       - "--localstatedir=/var"
       - "--mandir=/usr/local/share/man"
       - "--prefix=/usr"
@@ -140,12 +140,17 @@ SSSD from sources (in this example for Debian based systems).
       - "--with-autofs"
       - "--with-environment-file={{ sssd_environment_file }}"
       - "--with-initscript=systemd"
+      - "--with-krb5-conf=/etc/krb5.conf"
       - "--with-krb5-plugin-path=/usr/lib/{{ sssd_dpkg_architecture }}/krb5/plugins/libkrb5"
       - "--with-ldb-lib-dir=/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb"
       - "--with-log-path=/var/log/sssd"
       - "--with-pid-path=/var/run"
+      - "--with-plugin-path=/usr/lib/{{ sssd_dpkg_architecture }}/sssd"
+      - "--with-samba"
+      - "--with-secrets-db-path=/var/lib/sss/secrets"
+      - "--with-secrets"
       - "--with-ssh"
-      - "--with-sssd-user={{ sssd_user }}"
+      - "--with-sudo-lib-path=/usr/lib/{{ sssd_dpkg_architecture }}"
       - "--with-sudo"
       - "--with-systemdunitdir=/lib/systemd/system"
     sssd_config:
@@ -161,7 +166,23 @@ SSSD from sources (in this example for Debian based systems).
     - timorunge.sssd
 ```
 
-### 3) Apply patches to the source
+### 3) Don't generate any configuration
+
+Useful if you're using this role in combination with e.g. the
+[FreeIPA server](https://github.com/timorunge/ansible-freeipa-server)
+or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
+
+```yaml
+- hosts: all
+  vars:
+    sssd_config_type: none
+    sssd_from_sources: true
+    sssd_version: !!str 1_16_1
+  roles:
+    - timorunge.sssd
+```
+
+### 4) Apply patches to the source
 
 ```yaml
 - hosts: all
@@ -187,7 +208,7 @@ SSSD from sources (in this example for Debian based systems).
     - timorunge.sssd
 ```
 
-### 4) Override init.d and systemd templates
+### 5) Override init.d and systemd templates
 
 ```yaml
 - hosts: all

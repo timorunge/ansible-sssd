@@ -2,3 +2,58 @@
 
 # Path to environment file
 sssd_environment_file: /etc/default/sssd
+
+sssd_default_patches: []
+
+sssd_forbidden_users:
+  - adm
+  - apache
+  - backup
+  - bin
+  - bind
+  - daemon
+  - dbus
+  - dirsrv
+  - dnsmasq
+  - ftp
+  - games
+  - gnats
+  - halt
+  - httpd
+  - ipaapi
+  - irc
+  - kdcproxy
+  - landscape
+  - list
+  - lp
+  - lxd
+  - mail
+  - man
+  - messagebus
+  - news
+  - nobody
+  - nslcd
+  - ntp
+  - opendnssec
+  - openldap
+  - operator
+  - pkiuser
+  - polkitd
+  - pollinate
+  - proxy
+  - root
+  - shutdown
+  - sshd
+  - sync
+  - sys
+  - syslog
+  - systemd-network
+  - systemd-resolve
+  - tomcat8
+  - ubuntu
+  - uucp
+  - uuidd
+  - vagrant
+  - www-data
+
+sssd_forbidden_groups: "{{ sssd_forbidden_users }}"
