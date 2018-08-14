@@ -14,7 +14,3 @@
   notify:
     - restart sssd
     - systemctl daemon-reload
-
-- name: Run ldconfig
-  command: ldconfig
-  when: sssd_compile.changed

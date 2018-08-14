@@ -1,5 +1,9 @@
 ---
 
+- name: Run ldconfig
+  command: ldconfig
+  when: sssd_compile.changed
+
 - name: Pam auth update
   ignore_errors: yes
   command: pam-auth-update --package
