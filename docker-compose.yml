@@ -93,7 +93,7 @@ services:
   ubuntu_17_10_src:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile_Ubuntu_18.04
+      dockerfile: ./docker/Dockerfile_Ubuntu_17.10
       args:
         ANSIBLE_VERSION: 2.6.2
         ROLE_NAME: timorunge.sssd
@@ -104,7 +104,7 @@ services:
   ubuntu_17_10_pkg:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile_Ubuntu_18.04
+      dockerfile: ./docker/Dockerfile_Ubuntu_17.10
       args:
         ANSIBLE_VERSION: 2.6.2
         ROLE_NAME: timorunge.sssd

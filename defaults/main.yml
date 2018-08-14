@@ -29,7 +29,7 @@ sssd_config_src_file: sssd.example.conf
 sssd_from_sources: false
 
 # Version definition
-sssd_version: 1.16.1
+sssd_version: 1.16.3
 
 # GH has a different naming schema for the version
 sssd_version_src_schema: "{{ sssd_version | replace('.', '_') }}"

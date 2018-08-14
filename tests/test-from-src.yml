@@ -6,7 +6,7 @@
 
   vars:
     sssd_from_sources: true
-    sssd_version: 1.16.1
+    sssd_version: 1.16.3
     sssd_config_type: config
     sssd_config:
       sssd:

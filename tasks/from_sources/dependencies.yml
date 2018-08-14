@@ -6,6 +6,11 @@
     state: present
     update_cache: yes
 
+- name: Install SSSD pip dependencies
+  pip:
+    name: "{{ sssd_pip_dependency_pkgs | default(omit) }}"
+    state: present
+
 - name: Create SSSD group
   group:
     name: "{{ sssd_group }}"

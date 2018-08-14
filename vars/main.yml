@@ -3,8 +3,16 @@
 # Path to environment file
 sssd_environment_file: /etc/default/sssd
 
+# Other FreeIPA modules are using pip to get the latest versions of the
+# modules. Keep it consistent.
+sssd_pip_dependency_pkgs:
+  - dbus-python
+  - python-ldap
+
+# Empty dict
 sssd_default_patches: []
 
+# It's not allowed to set the `sssd_user` to those values
 sssd_forbidden_users:
   - adm
   - apache

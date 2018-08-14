@@ -15,34 +15,32 @@ sssd_pkgs:
 # SSSD build dependency packages
 sssd_build_dependency_pkgs:
   - autoconf
+  - automake
   - autopoint
-  - bind9-host
   - build-essential
   - check
   - cifs-utils
-  - debhelper
+  - clang
+  - dbus
   - dh-apparmor
-  - dh-autoreconf
-  - dh-python
-  - dh-systemd
   - dnsutils
   - docbook-xml
   - docbook-xsl
-  - dpkg-dev
-  - gcc
+  - fakeroot
+  - gettext
   - git
+  - gnutls-bin
+  - krb5-admin-server
   - krb5-config
-  - krb5-multidev
+  - krb5-kdc
+  - krb5-user
   - ldap-utils
-  - libaugeas-dev
   - libc-ares-dev
   - libcmocka-dev
   - libcollection-dev
   - libcurl4-openssl-dev
-  - libdbus-1-3
   - libdbus-1-dev
   - libdhash-dev
-  - libgdm-dev
   - libglib2.0-dev
   - libhttp-parser-dev
   - libini-config-dev
@@ -58,31 +56,39 @@ sssd_build_dependency_pkgs:
   - libnspr4-dev
   - libnss-wrapper
   - libnss3-dev
-  - libpam-dev
+  - libp11-kit-dev
   - libpam0g-dev
   - libpcre3-dev
   - libpopt-dev
   - libsasl2-dev
-  - libsasl2-modules
-  - libsasl2-modules-db
-  - libsasl2-modules-gssapi-mit
   - libselinux1-dev
   - libsemanage1-dev
   - libsmbclient-dev
+  - libssl-dev
   - libsystemd-dev
   - libtalloc-dev
   - libtdb-dev
   - libtevent-dev
+  - libtool
+  - libtool-bin
   - libuid-wrapper
   - libxml2-utils
   - lsb-release
   - make
+  - pep8
+  # - python-dbus # pip
   - python-dev
+  # - python-ldap # pip
+  - python-ldb
+  - python-psutil
+  - python-pytest
+  - python-requests
   - python-setuptools
   - python3-dev
   - python3-setuptools
-  - quilt
   - samba-dev
+  - slapd
+  - softhsm2
   - systemd
   - systemtap-sdt-dev
   - uuid-dev
@@ -156,12 +162,14 @@ sssd_default_build_options:
   - "--with-pid-path=/var/run"
   - "--with-plugin-path=/usr/lib/{{ sssd_dpkg_architecture }}/sssd"
   - "--with-samba"
-  - "--with-secrets-db-path=/var/lib/sss/secrets"
   - "--with-secrets"
+  - "--with-secrets-db-path=/var/lib/sss/secrets"
+  - "--with-smb-idmap-interface-version=6"
   - "--with-ssh"
-  - "--with-sudo-lib-path=/usr/lib/{{ sssd_dpkg_architecture }}"
   - "--with-sudo"
+  - "--with-sudo-lib-path=/usr/lib/{{ sssd_dpkg_architecture }}"
   - "--with-systemdunitdir=/lib/systemd/system"
+  - "--without-python3-bindings"
 
 # Set correct permissions for files and folders
 sssd_postinst_set_permissions:

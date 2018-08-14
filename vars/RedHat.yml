@@ -16,14 +16,34 @@ sssd_pkgs:
 
 # SSSD build dependency packages
 sssd_build_dependency_pkgs:
+  - autoconf
+  - automake
+  - clang-analyzer
+  - curl-devel
+  - dbus
+  - dbus-devel
+  # - dbus-python # pip
+  - fakeroot
+  - gcc
   - git
+  - glib2-devel
+  - krb5-server
+  - krb5-workstation
   - libcmocka-devel
-  - libldb-devel
-  - libpamtest-devel
   - make
+  - mock
   - nss_wrapper
-  - python34
-  - python34-devel
+  - openldap-clients
+  - openldap-devel
+  - openldap-servers
+  - pyldb
+  - pytest
+  - python-devel
+  # - python-ldap # pip
+  - python-pep8
+  - python-psutil
+  - python-requests
+  - python-setuptools
   - rpm-build
   - uid_wrapper
   - yum-utils
@@ -76,10 +96,10 @@ sssd_default_build_options:
   - "--enable-nsslibdir=/usr/lib64"
   - "--enable-pac-responder"
   - "--enable-pammoddir=/usr/lib64/security"
-  - "--libdir=/usr/lib64"
-  - "--libexecdir=/usr/libexec"
   - "--enable-sss-default-nss-plugin"
   - "--enable-systemtap"
+  - "--libdir=/usr/lib64"
+  - "--libexecdir=/usr/libexec"
   - "--with-ad-gpo-default=permissive"
   - "--with-autofs"
   - "--with-db-path=/var/lib/sss/db"
@@ -98,12 +118,13 @@ sssd_default_build_options:
   - "--with-plugin-path=/usr/lib64/sssd"
   - "--with-pubconf-path=/var/lib/sss/pubconf"
   - "--with-samba"
-  - "--with-secrets-db-path=/var/lib/sss/secrets"
   - "--with-secrets"
+  - "--with-secrets-db-path=/var/lib/sss/secrets"
   - "--with-session-recording"
+  - "--with-smb-idmap-interface-version=6"
   - "--with-ssh"
-  - "--with-sudo-lib-path=/usr/lib64"
   - "--with-sudo"
+  - "--with-sudo-lib-path=/usr/lib64"
   - "--with-syslog=journald"
   - "--with-test-dir=/dev/shm"
   - "--without-python3-bindings"

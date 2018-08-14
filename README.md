@@ -67,7 +67,7 @@ sssd_config_src_file: sssd.example.conf
 sssd_from_sources: false
 
 # Version definition:
-sssd_version: 1.16.1
+sssd_version: 1.16.3
 
 # Patches
 
@@ -118,7 +118,7 @@ SSSD from sources (in this example for Debian based systems).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: 1.16.1
+    sssd_version: 1.16.3
     sssd_default_build_options:
       - "--datadir=/usr/share"
       - "--disable-rpath"
@@ -177,7 +177,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
   vars:
     sssd_config_type: none
     sssd_from_sources: true
-    sssd_version: 1.16.1
+    sssd_version: 1.16.3
   roles:
     - timorunge.sssd
 ```
@@ -188,7 +188,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: 1.16.1
+    sssd_version: 1.16.3
     sssd_patches:
       add_libsss_child_la_to_makefile:
         dest_file: Makefile.am
@@ -413,10 +413,10 @@ sssd_config:
 SSSD build options
 ------------------
 
-An overview of the build options for SSSD (1.16.1).
+An overview of the build options for SSSD (1.16.3).
 
 ```sh
-`configure' configures sssd 1.16.1 to adapt to many kinds of systems.
+`configure' configures sssd 1.16.3 to adapt to many kinds of systems.
 
 Usage: ./configure [OPTION]... [VAR=VALUE]...
 
