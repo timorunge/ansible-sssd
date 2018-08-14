@@ -29,7 +29,10 @@ sssd_config_src_file: sssd.example.conf
 sssd_from_sources: false
 
 # Version definition
-sssd_version: !!str 1_16_1
+sssd_version: 1.16.1
+
+# GH has a different naming schema for the version
+sssd_version_src_schema: "{{ sssd_version | replace('.', '_') }}"
 
 # User & group definition
 sssd_user: sssd
@@ -39,7 +42,7 @@ sssd_group: "{{ sssd_user }}"
 sssd_download_url: https://github.com/SSSD/sssd/archive
 
 # Final download url for the SSSD tarball
-sssd_tarball_url: "{{ sssd_download_url }}/sssd-{{ sssd_version }}.tar.gz"
+sssd_tarball_url: "{{ sssd_download_url }}/sssd-{{ sssd_version_src_schema }}.tar.gz"
 
 # The place where to unpack, configure, build and install SSSD
 sssd_install_dir: /usr/local/src/sssd

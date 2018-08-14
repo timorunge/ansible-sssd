@@ -64,10 +64,10 @@ sssd_config_src_file: sssd.example.conf
 # SSSD from source:
 
 # Install SSSD from sources:
-sssd_from_sources: true
+sssd_from_sources: false
 
 # Version definition:
-sssd_version: !!str 1_16_1
+sssd_version: 1.16.1
 
 # Patches
 
@@ -118,7 +118,7 @@ SSSD from sources (in this example for Debian based systems).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: !!str 1_16_1
+    sssd_version: 1.16.1
     sssd_default_build_options:
       - "--datadir=/usr/share"
       - "--disable-rpath"
@@ -177,7 +177,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
   vars:
     sssd_config_type: none
     sssd_from_sources: true
-    sssd_version: !!str 1_16_1
+    sssd_version: 1.16.1
   roles:
     - timorunge.sssd
 ```
@@ -188,7 +188,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: !!str 1_16_1
+    sssd_version: 1.16.1
     sssd_patches:
       add_libsss_child_la_to_makefile:
         dest_file: Makefile.am

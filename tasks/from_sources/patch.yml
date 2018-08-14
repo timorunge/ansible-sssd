@@ -2,7 +2,7 @@
 
 - name: Patch SSSD source
   patch:
-    dest: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}/{{ item.value.dest_file }}"
+    dest: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}/{{ item.value.dest_file }}"
     src: "{{ item.value.patch_file }}"
     state: "{{ item.value.state | default(present) }}"
   with_dict: "{{ sssd_patches | default(omit) }}"

@@ -2,7 +2,7 @@
 
 - name: Make SRPM
   args:
-    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
   shell: "contrib/fedora/make_srpm.sh && yum-builddep -y rpmbuild/SRPMS/sssd-*.src.rpm"
   when: >
         ((sssd_checksum_catalog.changed) or
@@ -13,7 +13,7 @@
 
 - name: Build SSSD
   args:
-    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
   shell: "autoreconf -i -f && ./configure {{ sssd_build_options | join(' ') }}"
   when: >
         (sssd_checksum_catalog.changed) or

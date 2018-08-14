@@ -11,6 +11,6 @@ ansible-playbook ${ENV_WORKDIR}/${YML_TEST_FILE} -i ${ENV_WORKDIR}/inventory --c
 
 if [ "true" = "$(awk '/sssd_from_sources/{print $2}' ${ENV_WORKDIR}/${YML_TEST_FILE})" ] ; then
   REAL_SSSD_VERSION=$(sssd --version 2>&1)
-  EXPECTED_SSSD_VERSION=$(awk '/sssd_version/{print $3}' ${ENV_WORKDIR}/${YML_TEST_FILE} | sed -e 's/_/./g')
+  EXPECTED_SSSD_VERSION=$(awk '/sssd_version/{print $2}' ${ENV_WORKDIR}/${YML_TEST_FILE})
   test "${REAL_SSSD_VERSION}" = "${EXPECTED_SSSD_VERSION}" && (echo 'SSSD version test: pass' && exit 0) || (echo 'SSSD version test: fail' && exit 1)
 fi

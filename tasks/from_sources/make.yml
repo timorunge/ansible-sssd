@@ -2,13 +2,13 @@
 
 - name: Compile SSSD
   make:
-    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
   when: sssd_build.changed
   register: sssd_compile
 
 - name: Install SSSD
   make:
-    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
     target: install
   when: sssd_compile.changed
   notify:

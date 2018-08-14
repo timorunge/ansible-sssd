@@ -18,6 +18,6 @@
 
 - name: git init
   args:
-    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}"
-    creates: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version }}/.git/config"
+    chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
+    creates: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}/.git/config"
   shell: git config --global user.email "root@$(hostname)" && git init && git add . && git commit -m "init sssd {{ sssd_version }}"

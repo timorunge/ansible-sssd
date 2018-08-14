@@ -11,7 +11,6 @@ services:
         ROLE_NAME: timorunge.sssd
         WORKDIR: /ansible
     environment:
-      CONTAINER: docker
       TRAVIS: ${TRAVIS}
       YML_TEST_FILE: test-from-src.yml
   centos_7_pkg:
@@ -23,7 +22,6 @@ services:
         ROLE_NAME: timorunge.sssd
         WORKDIR: /ansible
     environment:
-      CONTAINER: docker
       TRAVIS: ${TRAVIS}
       YML_TEST_FILE: test-from-pkgs.yml
   debian_9_4_src:
