@@ -92,8 +92,8 @@ reload() {
 }
 
 restart() {
-        stop
-        start
+    stop
+    start
 }
 
 force_reload() {

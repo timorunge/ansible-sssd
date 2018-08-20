@@ -11,14 +11,14 @@ sssd_config_type: config
 
 # SSSD config options
 sssd_config:
-  sssd:
-    config_file_version: 2
-    services: nss, pam
-    domains: example.com
   'domain/example.com':
     access_provider: permit
     auth_provider: local
     id_provider: local
+  sssd:
+    config_file_version: 2
+    domains: example.com
+    services: nss, pam
 
 # SSSD config from file
 sssd_config_src_file: sssd.example.conf
@@ -44,7 +44,7 @@ sssd_download_url: https://github.com/SSSD/sssd/archive
 # Final download url for the SSSD tarball
 sssd_tarball_url: "{{ sssd_download_url }}/sssd-{{ sssd_version_src_schema }}.tar.gz"
 
-# The place where to unpack, configure, build and install SSSD
+# The place where to unpack, configure and build SSSD
 sssd_install_dir: /usr/local/src/sssd
 
 # Files

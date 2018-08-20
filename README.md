@@ -97,19 +97,47 @@ You can find the SSSD build options in [this document](#sssd-build-options).
 - hosts: all
   vars:
     sssd_config:
-      sssd:
-        config_file_version: 2
-        services: nss, pam
-        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
+      sssd:
+        config_file_version: 2
+        domains: example.com
+        services: nss, pam
   roles:
     - timorunge.sssd
 ```
 
-### 2) Build and configure SSSD according to your needs
+### 2) Example SSSD configurationn for FreeIPA
+
+```yaml
+- hosts: all
+  vars:
+    sssd_config:
+      'domain/example.com':
+        access_provider: ipa
+        auth_provider: ipa
+        cache_credentials: True
+        chpass_provider: ipa
+        id_provider: ipa
+        ipa_domain: example.com
+        ipa_hostname: debian-eeBahPh3.example.com
+        ipa_server: ipa-srv1.example.com
+        krb5_store_password_if_offline: True
+        ldap_tls_cacert: /etc/ipa/ca.crt
+      sssd:
+        config_file_version: 2
+        domains: example.com
+        services: ifp, nss, pam, ssh, sudo
+      nss:
+        homedir_substring: /home
+        memcache_timeout: 600
+  roles:
+    - timorunge.sssd
+```
+
+### 3) Build and configure SSSD according to your needs
 
 Beside the standard installation via packages it's also possible to build
 SSSD from sources (in this example for Debian based systems).
@@ -154,19 +182,19 @@ SSSD from sources (in this example for Debian based systems).
       - "--with-sudo"
       - "--with-systemdunitdir=/lib/systemd/system"
     sssd_config:
-      sssd:
-        config_file_version: 2
-        services: nss, pam
-        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
+      sssd:
+        config_file_version: 2
+        domains: example.com
+        services: nss, pam
   roles:
     - timorunge.sssd
 ```
 
-### 3) Don't generate any configuration
+### 4) Don't generate any configuration
 
 Useful if you're using this role in combination with e.g. the
 [FreeIPA server](https://github.com/timorunge/ansible-freeipa-server)
@@ -182,7 +210,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
     - timorunge.sssd
 ```
 
-### 4) Apply patches to the source
+### 5) Apply patches to the source
 
 ```yaml
 - hosts: all
@@ -196,19 +224,19 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
         state: present
     sssd_build_options: "{{ sssd_default_build_options }}"
     sssd_config:
-      sssd:
-        config_file_version: 2
-        services: nss, pam
-        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
+      sssd:
+        config_file_version: 2
+        domains: example.com
+        services: nss, pam
   roles:
     - timorunge.sssd
 ```
 
-### 5) Override init.d and systemd templates
+### 6) Override init.d and systemd templates
 
 ```yaml
 - hosts: all
@@ -216,14 +244,14 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
     sssd_init_template: roles/sssd/templates/sssd.service.j2
     sssd_service_template: roles/sssd/templates/sssd.init.j2
     sssd_config:
-      sssd:
-        config_file_version: 2
-        services: nss, pam
-        domains: example.com
       'domain/example.com':
         access_provider: permit
         auth_provider: local
         id_provider: local
+      sssd:
+        config_file_version: 2
+        domains: example.com
+        services: nss, pam
   roles:
     - timorunge.sssd
 ```
