@@ -9,6 +9,13 @@ sssd_pip_dependency_pkgs:
   - dbus-python
   - python-ldap
 
+sssd_add_sss_to_nss_databases:
+  - group
+  - passwd
+  - services
+  - shadow
+  - sudoers
+
 # Empty dict
 sssd_default_patches: []
 

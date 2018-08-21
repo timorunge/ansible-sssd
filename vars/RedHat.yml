@@ -27,6 +27,7 @@ sssd_build_dependency_pkgs:
   - gcc
   - git
   - glib2-devel
+  - http-parser-devel
   - krb5-server
   - krb5-workstation
   - libcmocka-devel
@@ -77,7 +78,7 @@ sssd_dirs:
   '/var/lib/sss':
     group: "{{ sssd_group }}"
     mode: !!str 0755
-    owner: "{{ sssd_user }}"
+    owner: root
   '/var/log/sssd':
     group: "{{ sssd_group }}"
     mode: !!str 0750

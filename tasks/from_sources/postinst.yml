@@ -19,3 +19,10 @@
     path: "{{ item.key }}"
   with_dict: "{{ sssd_postinst_set_permissions }}"
   when: sssd_postinst_set_permissions
+
+- name: Add sss database to /etc/nsswitch.conf
+  replace:
+    dest: /etc/nsswitch.conf
+    regexp: '^(?={{ item }}:(.*))(?:(?!sss).)+$'
+    replace: '{{ item }}:\1 sss'
+  with_items: "{{ sssd_add_sss_to_nss_databases }}"

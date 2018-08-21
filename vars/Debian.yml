@@ -124,7 +124,7 @@ sssd_dirs:
   '/var/lib/sss':
     group: "{{ sssd_group }}"
     mode: !!str 0755
-    owner: "{{ sssd_user }}"
+    owner: root
   '/var/log/sssd':
     group: "{{ sssd_group }}"
     mode: !!str 0700
@@ -143,9 +143,10 @@ sssd_default_build_options:
   - "--enable-nsslibdir=/lib/{{ sssd_dpkg_architecture }}"
   - "--enable-pac-responder"
   - "--enable-pammoddir=/lib/{{ sssd_dpkg_architecture }}/security"
+  - "--enable-sss-default-nss-plugin"
   - "--enable-systemtap"
   - "--includedir=/usr/include"
-  - "--infodir=/usr/local/share/info"
+  - "--infodir=/usr/share/info"
   - "--libdir=/usr/lib/{{ sssd_dpkg_architecture }}"
   - "--libexecdir=/usr/lib/{{ sssd_dpkg_architecture }}"
   - "--localstatedir=/var"
