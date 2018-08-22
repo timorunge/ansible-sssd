@@ -12,5 +12,5 @@
     target: install
   when: sssd_compile.changed
   notify:
-    - restart sssd
     - systemctl daemon-reload
+    - restart sssd

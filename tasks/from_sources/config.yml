@@ -14,8 +14,8 @@
     mode: 0644
     src: "{{ sssd_service_template }}"
   notify:
-    - restart sssd
     - systemctl daemon-reload
+    - restart sssd
 
 - name: Create SSSD init script
   template:
@@ -23,8 +23,8 @@
     mode: 0755
     src: "{{ sssd_init_template }}"
   notify:
-    - restart sssd
     - systemctl daemon-reload
+    - restart sssd
 
 - name: Copy SSSD logrotate file
   copy:

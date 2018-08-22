@@ -9,6 +9,7 @@ sssd_pip_dependency_pkgs:
   - dbus-python
   - python-ldap
 
+# Add the sss pam module to the following nss databases
 sssd_add_sss_to_nss_databases:
   - group
   - passwd
