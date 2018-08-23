@@ -959,7 +959,15 @@ Since the build time on Travis is limited for public repositories the
 Dependencies
 ------------
 
-None
+### Ubuntu 16.04
+
+On Ubuntu 16.04 you have to ensure that `pyopenssl` is
+[up to date](docker/Dockerfile_Ubuntu_16.04#22) before the
+installationof SSSD.
+
+```sh
+pip install --upgrade pyopenssl
+```
 
 License
 -------
