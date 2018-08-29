@@ -33,7 +33,7 @@ Note for RedHat
 ---------------
 Some of the packages that this role installs are only available in the `rhel-6-server-optional-rpms` or `rhel-7-server-optional-rpms` repositories, you might need to enable these repositories if you get an error like "No package matching 'sssd-dbus' found available, installed or updated".
 
-To enable these optional repo, for RHEL 6:
+To enable this optional repo for RHEL 6:
 ```sh
 subscription-manager repos --enable rhel-6-server-optional-rpms
 ```
