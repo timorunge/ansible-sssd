@@ -3,6 +3,8 @@
 - name: Compile SSSD
   make:
     chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
+    params:
+      NUM_THREADS: "{{ sssd_build_threads }}"
   when: sssd_build.changed
   register: sssd_compile
 
@@ -10,6 +12,8 @@
   make:
     chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
     target: install
+    params:
+      NUM_THREADS: "{{ sssd_build_threads }}"
   when: sssd_compile.changed
   notify:
     - systemctl daemon-reload

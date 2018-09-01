@@ -17,7 +17,7 @@ or higher in order to apply [patches](#3-apply-patches-to-the-source).
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.6.2
+pip install ansible==2.6.3
 ```
 
 All platform requirements are listed in the metadata file.
@@ -25,8 +25,22 @@ All platform requirements are listed in the metadata file.
 Install
 -------
 
+* Use [tag 0.4.2](https://github.com/timorunge/ansible-sssd/releases/tag/0.4.2)
+for [SSSD >= 1.6.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_1_16_3.html)
+* Use [tag >= 0.5.0](https://github.com/timorunge/ansible-sssd/releases/tag/0.5.0)
+for [SSSD >= 2.0.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_2_0_0.html)
+
+**Recommendation**
+
+Stay with SSSD 1.6.x. The 2.0.0 release is working but I had to add some
+[patches](files/patches/2.0.0) to get it up and running. The patches are
+basically commits after the initial release.
+The master is backwards compatible with the 1.6.13 release. 2.0.0 has just
+more dependencies on Debian based systems (`gir1.2-glib-2.0,
+libgirepository-1.0-1 & python-gi`, pip: `pyasn1, pyasn1-modules`).
+
 ```sh
-ansible-galaxy install timorunge.sssd
+ansible-galaxy install timorunge.sssd[,version]
 ```
 
 Role Variables
@@ -66,17 +80,17 @@ sssd_config_src_file: sssd.example.conf
 # Install SSSD from sources:
 sssd_from_sources: false
 
-# Version definition:
-sssd_version: 1.16.3
+# Version definition (just relevant if `sssd_from_sources` is true):
+sssd_version: 2.0.0
 
 # Patches
 
 # In this section you can apply custom patches to SSSD.
 # You can find one example in the README.md and in the tests directory.
 sssd_patches:
-  add_libsss_child_la_to_makefile:
+  fix-makefile:
     dest_file: Makefile.am
-    patch_file: add_libsss_child.la_to_makefile.patch
+    patch_file: "files/patches/{{ sssd_version }}/fix-makefile.diff"
     state: present
 
 # Build options
@@ -146,7 +160,7 @@ SSSD from sources (in this example for Debian based systems).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: 1.16.3
+    sssd_version: 2.0.0
     sssd_default_build_options:
       - "--datadir=/usr/share"
       - "--disable-rpath"
@@ -205,7 +219,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
   vars:
     sssd_config_type: none
     sssd_from_sources: true
-    sssd_version: 1.16.3
+    sssd_version: 2.0.0
   roles:
     - timorunge.sssd
 ```
@@ -216,11 +230,11 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 - hosts: all
   vars:
     sssd_from_sources: true
-    sssd_version: 1.16.3
+    sssd_version: 2.0.0
     sssd_patches:
-      add_libsss_child_la_to_makefile:
+      fix-makefile:
         dest_file: Makefile.am
-        patch_file: add_libsss_child.la_to_makefile.patch
+        patch_file: "files/patches/{{ sssd_version }}/fix-makefile.diff"
         state: present
     sssd_build_options: "{{ sssd_default_build_options }}"
     sssd_config:
@@ -264,6 +278,7 @@ SSSD config options
 # option: type, subtype, mandatory[, default]
 sssd_config:
   service:
+    # Options available to all services
     timeout: int, None, false
     debug: int, None, false
     debug_level: int, None, false
@@ -277,7 +292,9 @@ sssd_config:
     responder_idle_timeout: int, None, false
     cache_first: int, None, false
     description: str, None, false
+
   sssd:
+    # Monitor service
     config_file_version: int, None, false
     services: list, str, true, nss, pam
     domains: list, str, true
@@ -293,7 +310,9 @@ sssd_config:
     enable_files_domain: str, None, false
     domain_resolution_order: list, str, false
     try_inotify: bool, None, false
+
   nss:
+    # Name service
     enum_cache_timeout: int, None, false
     entry_cache_nowait_percentage: int, None, false
     entry_negative_timeout: int, None, false
@@ -313,7 +332,9 @@ sssd_config:
     get_domains_timeout: int, None, false
     memcache_timeout: int, None, false
     user_attributes: str, None, false
+
   pam:
+    # Authentication service
     offline_credentials_expiration: int, None, false
     offline_failed_login_attempts: int, None, false
     offline_failed_login_delay: int, None, false
@@ -330,28 +351,42 @@ sssd_config:
     pam_cert_db_path: str, None, false
     p11_child_timeout: int, None, false
     pam_app_services: str, None, false
+    pam_p11_allowed_services: str, None, false
+
   sudo:
+    # sudo service
     sudo_timed: bool, None, false
     sudo_inverse_order: bool, None, false
     sudo_threshold: int, None, false
+
   autofs:
+    # autofs service
     autofs_negative_timeout: int, None, false
+
   ssh:
+    # ssh service
     ssh_hash_known_hosts: bool, None, false
     ssh_known_hosts_timeout: int, None, false
     ca_db: str, None, false
+
   pac:
+    # PAC responder
     allowed_uids: str, None, false
     pac_lifetime: int, None, false
+
   ifp:
+    # InfoPipe responder
     allowed_uids: str, None, false
     user_attributes: str, None, false
+
   secrets:
+    # Secrets service
     provider: str, None, false
     containers_nest_level: int, None, false
     max_secrets: int, None, false
     max_uid_secrets: int, None, false
     max_payload_size: int, None, false
+    # Secrets service - proxy
     proxy_url: str, None, false
     auth_type: str, None, false
     auth_header_name: str, None, false
@@ -365,11 +400,15 @@ sssd_config:
     cacert: str, None, false
     cert: str, None, false
     key: str, None, false
+
   session_recording:
+    # Session recording service
     scope: str, None, false
     users: list, str, false
     groups: list, str, false
+
   provider:
+    # Available provider types
     id_provider: str, None, true
     auth_provider: str, None, false
     access_provider: str, None, false
@@ -380,7 +419,9 @@ sssd_config:
     subdomains_provider: str, None, false
     selinux_provider: str, None, false
     session_provider: str, None, false
+
   domain:
+    # Options available to all domains
     description: str, None, false
     domain_type: str, None, false
     debug: int, None, false
@@ -395,7 +436,6 @@ sssd_config:
     offline_timeout: int, None, false
     cache_credentials: bool, None, false
     cache_credentials_minimal_first_factor_length: int, None, false
-    store_legacy_passwords: bool, None, false
     use_fully_qualified_names: bool, None, false
     ignore_group_members: bool, None, false
     entry_cache_timeout: int, None, false
@@ -413,6 +453,7 @@ sssd_config:
     homedir_substring: str, None, false
     override_shell: str, None, false
     default_shell: str, None, false
+    description: str, None, false
     realmd_tags: str, None, false
     subdomain_refresh_interval: int, None, false
     subdomain_inherit: str, None, false
@@ -420,6 +461,9 @@ sssd_config:
     cached_auth_timeout: int, None, false
     full_name_format: str, None, false
     re_expression: str, None, false
+    auto_private_groups: str, None, false
+
+    # Entry cache timeouts
     entry_cache_user_timeout: int, None, false
     entry_cache_group_timeout: int, None, false
     entry_cache_netgroup_timeout: int, None, false
@@ -428,6 +472,8 @@ sssd_config:
     entry_cache_sudo_timeout: int, None, false
     entry_cache_ssh_host_timeout: int, None, false
     refresh_expired_interval: int, None, false
+
+    # Dynamic DNS updates
     dyndns_update: bool, None, false
     dyndns_ttl: int, None, false
     dyndns_iface: str, None, false
@@ -436,15 +482,24 @@ sssd_config:
     dyndns_force_tcp: bool, None, false
     dyndns_auth: str, None, false
     dyndns_server: str, None, false
+
+  # Special providers
+  provider/permit:
+
+  provider/permit/access:
+
+  provider/deny:
+
+  provider/deny/access:
 ```
 
 SSSD build options
 ------------------
 
-An overview of the build options for SSSD (1.16.3).
+An overview of the build options for SSSD (2.0.0).
 
 ```sh
-`configure' configures sssd 1.16.3 to adapt to many kinds of systems.
+`configure' configures sssd 2.0.0 to adapt to many kinds of systems.
 
 Usage: ./configure [OPTION]... [VAR=VALUE]...
 
@@ -484,7 +539,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -531,8 +585,6 @@ Optional Features:
                           ($libdir/libnfsidmap)
   --enable-all-experimental-features
                           build all experimental features
-  --enable-dbus-tests     enable running tests using a dbus server instance
-                          [default=yes]
   --enable-sss-default-nss-plugin
                           This option change standard behaviour of sss nss
                           plugin. If this option is enabled the sss nss plugin
@@ -541,6 +593,8 @@ Optional Features:
   --enable-files-domain   If this feature is enabled, then SSSD always enables
                           a domain with id_provider=files even if the domain
                           is not specified in the config file [default=no]
+  --enable-local-provider If this feature is enabled, then local-provider will
+                          be built by default. [default=no]
   --enable-ldb-version-check
                           compile with ldb runtime version check [default=no]
   --disable-krb5-locator-plugin
@@ -562,12 +616,9 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-pic[=PKGS]       try to use only PIC/non-PIC objects [default=use
                           both]
-  --with-aix-soname=aix|svr4|both
-                          shared library versioning (aka "SONAME") variant to
-                          provide on AIX, [default=aix].
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
-  --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
-                          compiler's sysroot if not specified).
+  --with-sysroot=DIR Search for dependent libraries within DIR
+                        (or the compiler's sysroot if not specified).
   --with-gnu-ld           assume the C compiler uses GNU ld default=no
   --with-libiconv-prefix[=DIR]  search for libiconv in DIR/include and DIR/lib
   --without-libiconv-prefix     don't search for libiconv in includedir and libdir
@@ -738,7 +789,7 @@ Optional Packages:
   --with-sssd-user=<user> User for running SSSD (root)
 
 
-  --with-secrets          Whether to build with secrets support [yes]
+  --with-secrets          Whether to build with secrets support [no]
 
   --with-secrets-db-path=PATH
                           Path to the SSSD databases [/var/lib/sss/secrets]
@@ -787,8 +838,6 @@ Some influential environment variables:
   CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
   CPP         C preprocessor
-  LT_SYS_LIBRARY_PATH
-              User-defined run-time library search path.
   PKG_CONFIG  path to pkg-config utility
   POPT_CFLAGS C compiler flags for POPT, overriding pkg-config
   POPT_LIBS   linker flags for POPT, overriding pkg-config
@@ -866,10 +915,10 @@ Some influential environment variables:
               C compiler flags for HTTP_PARSER, overriding pkg-config
   HTTP_PARSER_LIBS
               linker flags for HTTP_PARSER, overriding pkg-config
-  UUID_CFLAGS C compiler flags for UUID, overriding pkg-config
-  UUID_LIBS   linker flags for UUID, overriding pkg-config
   CURL_CFLAGS C compiler flags for CURL, overriding pkg-config
   CURL_LIBS   linker flags for CURL, overriding pkg-config
+  UUID_CFLAGS C compiler flags for UUID, overriding pkg-config
+  UUID_LIBS   linker flags for UUID, overriding pkg-config
   JANSSON_CFLAGS
               C compiler flags for JANSSON, overriding pkg-config
   JANSSON_LIBS
@@ -919,8 +968,9 @@ Testing
 
 [![Build Status](https://travis-ci.org/timorunge/ansible-sssd.svg?branch=master)](https://travis-ci.org/timorunge/ansible-sssd)
 
-Testing is done with [Docker Compose](https://docs.docker.com/compose/) which
-is bringing up the following containers:
+Tests are done with [Docker](https://www.docker.com) and
+[docker_test_runner](https://github.com/timorunge/docker-test-runner) which
+brings up the following containers with different environment settings:
 
 * CentOS 7
 * Debian 9.4 (Stretch)
@@ -930,27 +980,22 @@ is bringing up the following containers:
 * Ubuntu 18.04 (Bionic Beaver)
 * Ubuntu 18.10 (Cosmic Cuttlefish)
 
-Ansible 2.6.2 is installed on all containers and is applying two test
-playbooks:
-
-* [test-from-pkgs.yml](tests/test-from-pkgs.yml)
-* [test-from-src.yml](tests/test-from-src.yml)
+Ansible 2.6.3 is installed on all containers and a
+[test playbook](tests/test.yml) is getting applied.
 
 For further details and additional checks take a look at the
-[Docker entrypoint](docker/docker-entrypoint.sh).
+[docker_test_runner configuration](tests/docker_test_runner.yml) and the
+[Docker entrypoint](tests/docker/docker-entrypoint.sh).
 
 ```sh
-# Testing locally with docker-compose:
-docker-compose config
-docker-compose pull
-docker-compose build
-docker-compose up --no-start
-docker-compose up
-docker-compose down
+# Testing locally:
+cd tests
+curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
+./docker_test_runner.py
 ```
 
 Since the build time on Travis is limited for public repositories the
-[automated tests](.travis-docker-compose.yml) are limited to:
+automated tests are limited to:
 
 * CentOS 7
 * Debian 9.4 (Stretch)
@@ -962,8 +1007,8 @@ Dependencies
 ### Ubuntu 16.04
 
 On Ubuntu 16.04 you have to ensure that `pyopenssl` is
-[up to date](docker/Dockerfile_Ubuntu_16.04#22) before the
-installationof SSSD.
+[up to date](docker/Dockerfile_Ubuntu_16.04#L18) before the
+installation of SSSD.
 
 ```sh
 pip install --upgrade pyopenssl

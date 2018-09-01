@@ -1,0 +1,34 @@
+---
+
+docker_image_build_args:
+  ansible_role: timorunge.sssd
+  ansible_version: 2.6.3
+
+docker_image_path: "__PATH__/tests/docker"
+
+docker_images:
+  - CentOS_7
+  - Debian_9_4
+  - Debian_10
+  - Ubuntu_16_04
+  - Ubuntu_17_10
+  - Ubuntu_18_04
+  - Ubuntu_18_10
+
+docker_container_environments:
+  pkg:
+    sssd_from_sources: !!str false
+  src_1_16_3:
+    sssd_from_sources: !!str true
+    sssd_version: 1.16.3
+  src_2_0_0:
+    sssd_from_sources: !!str true
+    sssd_version: 2.0.0
+
+docker_container_volumes:
+  "__PATH__/":
+    bind: /etc/ansible/roles/timorunge.sssd
+    mode: ro
+  "__PATH__/tests":
+    bind: /ansible
+    mode: rw

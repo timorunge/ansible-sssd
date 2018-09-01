@@ -12,9 +12,9 @@ sssd_config_type: none
 # SSSD config options
 sssd_config:
   'domain/example.com':
-    access_provider: permit
-    auth_provider: local
-    id_provider: local
+    access_provider: ldap
+    auth_provider: ldap
+    id_provider: ldap
   sssd:
     config_file_version: 2
     domains: example.com
@@ -28,8 +28,8 @@ sssd_config_src_file: sssd.example.conf
 # Install SSSD from sources
 sssd_from_sources: false
 
-# Version definition
-sssd_version: 1.16.3
+# Version definition (just relevant if `sssd_from_sources` is true):
+sssd_version: 2.0.0
 
 # GH has a different naming schema for the version
 sssd_version_src_schema: "{{ sssd_version | replace('.', '_') }}"
@@ -83,6 +83,9 @@ sssd_patches: "{{ sssd_default_patches }}"
 
 # Force a build
 sssd_force_build: false
+
+# Number of threads to use
+sssd_build_threads: 2
 
 # The default build options are stored in `vars/{{ ansible_os_family }}.yml`
 sssd_build_options: "{{ sssd_default_build_options }}"

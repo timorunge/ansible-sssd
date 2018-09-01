@@ -2,26 +2,20 @@
 
 sudo: true
 
-env:
-  - DOCKER_COMPOSE_VERSION=1.22.0
+language: python
+
+python:
+  - 2.7
 
 services:
   - docker
 
 install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker-compose --version
+  - pip install --upgrade pip
+  - curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
 
 script:
-  - docker-compose -f .travis-docker-compose.yml config
-  - docker-compose -f .travis-docker-compose.yml pull
-  - docker-compose -f .travis-docker-compose.yml build
-  - docker-compose -f .travis-docker-compose.yml up --no-start
-  - docker-compose -f .travis-docker-compose.yml up
-  - docker-compose -f .travis-docker-compose.yml down
+  - ./docker_test_runner.py -f tests/docker_test_runner.travis.yml -t 3
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

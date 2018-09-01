@@ -1,0 +1,13 @@
+diff --git a/src/tests/python/sssd/testlib/common/qe_class.py b/src/tests/python/sssd/testlib/common/qe_class.py
+index 30b050e23..b2c28d93d 100644
+--- a/src/tests/python/sssd/testlib/common/qe_class.py
++++ b/src/tests/python/sssd/testlib/common/qe_class.py
+@@ -110,7 +110,7 @@ class QeHost(QeBaseHost):
+                 return cmd.returncode
+             else:
+                 raise Exception('Unable to %s sssd' % action, 1)
+-        elif '7.' in self.distro.split()[6]:
++        elif '7.' or '8.' in self.distro.split()[6]:
+             cmd = self.run_command(['systemctl', action, 'sssd'],
+                                    raiseonerr=False)
+             if cmd.returncode == 0:

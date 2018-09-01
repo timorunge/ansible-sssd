@@ -1,0 +1,13 @@
+diff --git a/src/tests/multihost/basic/mhc.yaml b/src/tests/multihost/basic/mhc.yaml
+index 1b56eb3dd..de73011bd 100644
+--- a/src/tests/multihost/basic/mhc.yaml
++++ b/src/tests/multihost/basic/mhc.yaml
+@@ -4,6 +4,6 @@ domains:
+   - name: testrealm.test
+     type: sssd
+     hosts:
+-      - name: idm1.example.test
+-        external_hostname: idm1.example.test
++      - name: hostname1
++        external_hostname: hostname1
+         role: master

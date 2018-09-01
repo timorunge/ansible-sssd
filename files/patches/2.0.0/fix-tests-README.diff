@@ -1,0 +1,17 @@
+diff --git a/src/tests/multihost/basic/README b/src/tests/multihost/basic/README
+index b3bc38474..e60d08698 100644
+--- a/src/tests/multihost/basic/README
++++ b/src/tests/multihost/basic/README
+@@ -10,10 +10,10 @@ Following are the test cases:
+
+ Requirements to run the test:
+
+-1. Fedora 26/RHEL7.4/CentOS7.4 with pytest,pytest-multihost,
++1. Fedora 28/RHEL7.5/CentOS7.5 with pytest,pytest-multihost,
+ paramaiko system as controller node
+
+-2. Another Fedora26 system to be provisioned
++2. Another Fedora28 system to be provisioned
+
+ NOTE: Currently these tests can only be run inside internal Red Hat Network
+ as there is no capability to provision systems upstream.

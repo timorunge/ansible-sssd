@@ -28,6 +28,7 @@ sssd_build_dependency_pkgs:
   - docbook-xsl
   - fakeroot
   - gettext
+  - gir1.2-glib-2.0
   - git
   - gnutls-bin
   - krb5-admin-server
@@ -41,6 +42,7 @@ sssd_build_dependency_pkgs:
   - libcurl4-openssl-dev
   - libdbus-1-dev
   - libdhash-dev
+  - libgirepository-1.0-1
   - libglib2.0-dev
   - libhttp-parser-dev
   - libini-config-dev
@@ -78,9 +80,12 @@ sssd_build_dependency_pkgs:
   - pep8
   # - python-dbus # pip
   - python-dev
+  - python-gi
   # - python-ldap # pip
   - python-ldb
   - python-psutil
+  # - python-pyasn1 # pip
+  # - python-pyasn1-modules # pip
   - python-pytest
   - python-requests
   - python-setuptools

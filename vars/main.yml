@@ -7,6 +7,9 @@ sssd_environment_file: /etc/default/sssd
 # modules. Keep it consistent.
 sssd_pip_dependency_pkgs:
   - dbus-python
+  - pyasn1
+  - pyasn1-modules
+  - pyopenssl
   - python-ldap
 
 # Add the sss pam module to the following nss databases
