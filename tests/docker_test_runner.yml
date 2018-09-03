@@ -26,7 +26,7 @@ docker_container_environments:
     sssd_version: 2.0.0
 
 docker_container_volumes:
-  "__PATH__/":
+  "__PATH__":
     bind: /etc/ansible/roles/timorunge.sssd
     mode: ro
   "__PATH__/tests":

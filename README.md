@@ -1008,9 +1008,8 @@ For further details and additional checks take a look at the
 
 ```sh
 # Testing locally:
-cd tests
 curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
-./docker_test_runner.py
+./docker_test_runner.py -f tests/docker_test_runner.yml
 ```
 
 Since the build time on Travis is limited for public repositories the
@@ -1026,7 +1025,7 @@ Dependencies
 ### Ubuntu 16.04
 
 On Ubuntu 16.04 you have to ensure that `pyopenssl` is
-[up to date](docker/Dockerfile_Ubuntu_16.04#L18) before the
+[up to date](docker/Dockerfile_Ubuntu_16_04#L18) before the
 installation of SSSD.
 
 ```sh
