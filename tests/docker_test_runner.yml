@@ -1,8 +1,14 @@
 ---
 
+threads: 4
+
+log_level: INFO
+
+disable_logging: False
+
 docker_image_build_args:
   ansible_role: timorunge.sssd
-  ansible_version: 2.6.3
+  ansible_version: "2.6.3"
 
 docker_image_path: "__PATH__/tests/docker"
 
@@ -17,13 +23,13 @@ docker_images:
 
 docker_container_environments:
   pkg:
-    sssd_from_sources: !!str false
-  src_1_16_3:
-    sssd_from_sources: !!str true
-    sssd_version: 1.16.3
-  src_2_0_0:
-    sssd_from_sources: !!str true
-    sssd_version: 2.0.0
+    sssd_from_sources: "false"
+  "1_16_3":
+    sssd_from_sources: "true"
+    sssd_version: "1.16.3"
+  "2_0_0":
+    sssd_from_sources: "true"
+    sssd_version: "2.0.0"
 
 docker_container_volumes:
   "__PATH__":
@@ -32,3 +38,6 @@ docker_container_volumes:
   "__PATH__/tests":
     bind: /ansible
     mode: rw
+  "__PATH__/tests/docker":
+    bind: /docker
+    mode: ro

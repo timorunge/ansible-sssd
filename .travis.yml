@@ -15,7 +15,7 @@ install:
   - curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
 
 script:
-  - ./docker_test_runner.py -f tests/docker_test_runner.travis.yml -t 3
+  - ./docker_test_runner.py -f tests/docker_test_runner.travis.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
