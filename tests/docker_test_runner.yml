@@ -1,5 +1,7 @@
 ---
 
+project_name: SSSD - System Security Services Daemon
+
 threads: 4
 
 log_level: INFO

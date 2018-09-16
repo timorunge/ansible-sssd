@@ -4,7 +4,7 @@ set -e
 test -z ${sssd_from_sources} && echo "Missing environment variable: sssd_from_sources" && exit 1
 (test "${sssd_from_sources}" = "true" && test -z ${sssd_version}) && echo "Missing environment variable: sssd_version" && exit 1
 
-printf "[defaults]\nroles_path=/etc/ansible/roles\n" > ansible.cfg
+printf "[defaults]\nroles_path=/etc/ansible/roles\n" > /ansible/ansible.cfg
 
 ansible-lint /ansible/test.yml
 ansible-lint /etc/ansible/roles/${ansible_role}/tasks/main.yml
