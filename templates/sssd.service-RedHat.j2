@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-# Service enabled: {{ sssd_service_enabled | default(yes) }}
+# Service enabled: {{ sssd_service_enabled | default('yes') }}
 [Unit]
 Description=System Security Services Daemon
 # SSSD must be running before we permit user sessions

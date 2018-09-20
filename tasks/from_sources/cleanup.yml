@@ -2,6 +2,5 @@
 
 - name: Remove not required files
   file:
-    path: "{{ item }}"
+    path: "{{ sssd_files_to_remove }}"
     state: absent
-  with_items: "{{ sssd_files_to_remove }}"

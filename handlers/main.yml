@@ -7,6 +7,6 @@
 
 - name: restart sssd
   service:
-    enabled: "{{ sssd_service_enabled | default(yes) }}"
+    enabled: "{{ sssd_service_enabled | default('yes') }}"
     name: sssd
     state: "{{ sssd_service_state | default('restarted') }}"

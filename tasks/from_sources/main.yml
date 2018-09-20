@@ -13,7 +13,7 @@
       - "patches/{{ ansible_os_family }}-{{ ansible_distribution }}-{{ sssd_version }}.yml"
       - "patches/{{ ansible_os_family }}-{{ sssd_version }}.yml"
       - "patches/{{ sssd_version }}.yml"
-      skip: true
+      skip: True
 
 - include_tasks: dependencies.yml
 

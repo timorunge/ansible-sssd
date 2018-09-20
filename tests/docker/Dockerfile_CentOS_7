@@ -16,7 +16,9 @@ RUN yum install -y \
     pip \
     python \
     python-pip \
-    systemd
+    systemd \
+    unzip \
+    wget
 RUN yum clean all
 
 RUN echo "NETWORKING=yes" >> /etc/sysconfig/network

@@ -17,7 +17,7 @@
     mode: "{{ item.value.mode }}"
     owner: "{{ item.value.owner }}"
     path: "{{ item.key }}"
-  with_dict: "{{ sssd_postinst_set_permissions }}"
+  loop: "{{ sssd_postinst_set_permissions | dict2items }}"
   when: sssd_postinst_set_permissions
 
 - name: Add sss database to /etc/nsswitch.conf
@@ -25,4 +25,4 @@
     dest: /etc/nsswitch.conf
     regexp: '^(?={{ item }}:(.*))(?:(?!sss).)+$'
     replace: '{{ item }}:\1 sss'
-  with_items: "{{ sssd_add_sss_to_nss_databases }}"
+  loop: "{{ sssd_add_sss_to_nss_databases | flatten(levels=1) }}"

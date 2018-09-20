@@ -1,10 +1,12 @@
 ---
 
 # Path to environment file
+# Type: Str
 sssd_environment_file: /etc/default/sssd
 
 # Other FreeIPA modules are using pip to get the latest versions of the
 # modules. Keep it consistent.
+# Type: List
 sssd_pip_dependency_pkgs:
   - dbus-python
   - pyasn1
@@ -13,6 +15,7 @@ sssd_pip_dependency_pkgs:
   - python-ldap
 
 # Add the sss pam module to the following nss databases
+# Type: List
 sssd_add_sss_to_nss_databases:
   - group
   - passwd
@@ -21,9 +24,11 @@ sssd_add_sss_to_nss_databases:
   - sudoers
 
 # Empty dict
-sssd_default_patches: []
+# Type: Dict
+sssd_default_patches: {}
 
 # It's not allowed to set the `sssd_user` to those values
+# Type: List
 sssd_forbidden_users:
   - adm
   - apache
@@ -75,4 +80,5 @@ sssd_forbidden_users:
   - vagrant
   - www-data
 
+# Type: List
 sssd_forbidden_groups: "{{ sssd_forbidden_users }}"

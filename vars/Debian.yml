@@ -1,6 +1,7 @@
 ---
 
 # SSSD packages
+# Type: List
 sssd_pkgs:
   - sssd
   - sssd-ad
@@ -13,6 +14,7 @@ sssd_pkgs:
   - sssd-proxy
 
 # SSSD build dependency packages
+# Type: List
 sssd_build_dependency_pkgs:
   - autoconf
   - automake
@@ -101,10 +103,12 @@ sssd_build_dependency_pkgs:
   - xsltproc
 
 # Delete files
+# Type: List
 sssd_files_to_remove:
   - "/usr/lib/{{ sssd_dpkg_architecture }}/ldb/modules/ldb/memberof.la"
 
 # Directories
+# Type: Dict
 sssd_dirs:
   "{{ sssd_install_dir }}/build":
     group: root
@@ -118,27 +122,29 @@ sssd_dirs:
     group: root
     mode: !!str 0755
     owner: root
-  '/etc/sssd':
+  "/etc/sssd":
     group: "{{ sssd_group }}"
     mode: !!str 0711
     owner: "{{ sssd_user }}"
-  '/etc/sssd/conf.d':
+  "/etc/sssd/conf.d":
     group: "{{ sssd_group }}"
     mode: !!str 0711
     owner: "{{ sssd_user }}"
-  '/var/lib/sss':
+  "/var/lib/sss":
     group: "{{ sssd_group }}"
     mode: !!str 0755
     owner: root
-  '/var/log/sssd':
+  "/var/log/sssd":
     group: "{{ sssd_group }}"
     mode: !!str 0700
     owner: "{{ sssd_user }}"
 
 # Install architecture-dependent files in EPREFIX
+# Type: Str
 sssd_exec_prefix: /usr
 
 # SSSD default build options
+# Type: List
 sssd_default_build_options:
   - "--datadir=/usr/share"
   - "--disable-rpath"
@@ -178,68 +184,69 @@ sssd_default_build_options:
   - "--without-python3-bindings"
 
 # Set correct permissions for files and folders
+# Type: Dict
 sssd_postinst_set_permissions:
-  '/etc/sssd':
+  "/etc/sssd":
     group: "{{ sssd_group }}"
     mode: !!str 0711
     owner: "{{ sssd_user }}"
-  '/etc/sssd/conf.d':
+  "/etc/sssd/conf.d":
     group: "{{ sssd_group }}"
     mode: !!str 0711
     owner: "{{ sssd_user }}"
-  '/usr/lib/{{ sssd_dpkg_architecture }}/sssd/krb5_child':
+  "/usr/lib/{{ sssd_dpkg_architecture }}/sssd/krb5_child":
     group: "{{ sssd_group }}"
     mode: !!str 4754
     owner: root
-  '/usr/lib/{{ sssd_dpkg_architecture }}/sssd/ldap_child':
+  "/usr/lib/{{ sssd_dpkg_architecture }}/sssd/ldap_child":
     group: "{{ sssd_group }}"
     mode: !!str 4754
     owner: root
-  '/usr/lib/{{ sssd_dpkg_architecture }}/sssd/p11_child':
+  "/usr/lib/{{ sssd_dpkg_architecture }}/sssd/p11_child":
     group: "{{ sssd_group }}"
     mode: !!str 4754
     owner: root
-  '/usr/lib/{{ sssd_dpkg_architecture }}/sssd/proxy_child':
+  "/usr/lib/{{ sssd_dpkg_architecture }}/sssd/proxy_child":
     group: "{{ sssd_group }}"
     mode: !!str 4754
     owner: root
-  '/usr/lib/{{ sssd_dpkg_architecture }}/sssd/selinux_child':
+  "/usr/lib/{{ sssd_dpkg_architecture }}/sssd/selinux_child":
     group: "{{ sssd_group }}"
     mode: !!str 4754
     owner: root
-  '/var/lib/sss/db':
+  "/var/lib/sss/db":
     group: "{{ sssd_group }}"
     mode: !!str 0700
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/gpo_cache':
+  "/var/lib/sss/gpo_cache":
     group: "{{ sssd_group }}"
     mode: !!str 0755
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/keytabs':
+  "/var/lib/sss/keytabs":
     group: "{{ sssd_group }}"
     mode: !!str 0700
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/mc':
+  "/var/lib/sss/mc":
     group: "{{ sssd_group }}"
     mode: !!str 0755
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/pipes':
+  "/var/lib/sss/pipes":
     group: "{{ sssd_group }}"
     mode: !!str 0755
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/pipes/private':
+  "/var/lib/sss/pipes/private":
     group: root
     mode: !!str 0700
     owner: root
-  '/var/lib/sss/pubconf':
+  "/var/lib/sss/pubconf":
     group: "{{ sssd_group }}"
     mode: !!str 0755
     owner: "{{ sssd_user }}"
-  '/var/lib/sss/secrets':
+  "/var/lib/sss/secrets":
     group: "{{ sssd_group }}"
     mode: !!str 0700
     owner: "{{ sssd_user }}"
-  '/var/log/sssd':
+  "/var/log/sssd":
     group: "{{ sssd_group }}"
     mode: !!str 0700
     owner: "{{ sssd_user }}"

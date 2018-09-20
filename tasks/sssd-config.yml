@@ -19,9 +19,9 @@
     mode: 0600
     owner: root
     src: sssd.conf.j2
-  when: sssd_config_type == "config"
   notify:
     - restart sssd
+  when: sssd_config_type == "config"
 
 - name: Configure SSSD service (from file)
   copy:
@@ -30,6 +30,6 @@
     mode: 0600
     owner: root
     src: "{{ sssd_config_src_file }}"
-  when: sssd_config_type == "file"
   notify:
     - restart sssd
+  when: sssd_config_type == "file"

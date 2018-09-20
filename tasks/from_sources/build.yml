@@ -15,9 +15,9 @@
   args:
     chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
   shell: "autoreconf -i -f && ./configure {{ sssd_build_options | join(' ') }}"
+  register: sssd_build
   when: >
         (sssd_checksum_catalog.changed) or
         (sssd_source_files.changed) or
         (sssd_patches.changed) or
         (sssd_force_build)
-  register: sssd_build

@@ -1,14 +1,12 @@
 ---
 
 - hosts: localhost
-  remote_user: root
-  gather_facts: true
-
+  gather_facts: True
   # Missing variables are set via `docker_test_runner`
   vars:
     sssd_config_type: config
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: ldap
         auth_provider: ldap
         id_provider: ldap
@@ -16,6 +14,5 @@
         config_file_version: 2
         services: nss, pam
         domains: example.com
-
   roles:
     - timorunge.sssd

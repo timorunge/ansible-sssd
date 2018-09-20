@@ -1,6 +1,6 @@
 ---
 
-sudo: true
+sudo: True
 
 language: python
 

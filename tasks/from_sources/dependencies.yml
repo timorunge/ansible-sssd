@@ -33,4 +33,4 @@
     owner: "{{ item.value.owner }}"
     path: "{{ item.key }}"
     state: directory
-  with_dict: "{{ sssd_dirs | combine(sssd_additional_dirs) }}"
+  loop: "{{ (sssd_dirs | combine(sssd_additional_dirs)) | dict2items }}"

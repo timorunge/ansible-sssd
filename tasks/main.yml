@@ -4,13 +4,15 @@
   include_vars: main.yml
 
 - name: Gather OS specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-      - "{{ ansible_os_family }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-      - "{{ ansible_os_family }}-{{ ansible_distribution }}.yml"
-      - "{{ ansible_os_family }}.yml"
-      skip: true
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_os_family }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      paths:
+        - vars
 
 - include_tasks: facts.yml
 

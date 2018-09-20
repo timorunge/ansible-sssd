@@ -13,8 +13,8 @@
     src: "{{ sssd_source_download.dest }}"
     extra_opts:
       - "--overwrite"
-  when: sssd_source_download.changed
   register: sssd_source_files
+  when: sssd_source_download.changed
 
 - name: git init
   args:

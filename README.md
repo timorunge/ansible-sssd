@@ -74,15 +74,18 @@ description in this paragraph. For all variables, take a look at the
 
 ```yaml
 # Enable / disable SSSD as a service
+# Type: Bool
 sssd_service_enabled: yes
 
 # Choose the config type: config (`sssd_config`), file (`sssd_config_src_file`)
 # or none (disable sssd.conf generation)
+# Type: Str
 sssd_config_type: config
 
 # Default SSSD config options
+# Type: Dict
 sssd_config:
-  'domain/example.com':
+  "domain/example.com":
     access_provider: permit
     auth_provider: local
     id_provider: local
@@ -92,20 +95,24 @@ sssd_config:
     domains: example.com
 
 # Default SSSD config from file
+# Type: Str
 sssd_config_src_file: sssd.example.conf
 
 # SSSD from source:
 
 # Install SSSD from sources:
-sssd_from_sources: false
+# Type: Bool
+sssd_from_sources: False
 
-# Version definition (just relevant if `sssd_from_sources` is true):
+# Version definition (just relevant if `sssd_from_sources` is True):
+# Type: Str
 sssd_version: 2.0.0
 
 # Patches
 
 # In this section you can apply custom patches to SSSD.
 # You can find one example in the README.md and in the tests directory.
+# Type: Dict
 sssd_patches:
   fix-makefile:
     dest_file: Makefile.am
@@ -115,6 +122,7 @@ sssd_patches:
 # Build options
 
 # The default build options are stored in `vars/{{ ansible_os_family }}.yml`
+# Type: List
 sssd_build_options: "{{ sssd_default_build_options }}"
 ```
 
@@ -130,7 +138,7 @@ You can find the SSSD build options in [this document](#sssd-build-options).
 - hosts: all
   vars:
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: permit
         auth_provider: local
         id_provider: local
@@ -148,7 +156,7 @@ You can find the SSSD build options in [this document](#sssd-build-options).
 - hosts: all
   vars:
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: ipa
         auth_provider: ipa
         cache_credentials: True
@@ -178,7 +186,7 @@ SSSD from sources (in this example for Debian based systems).
 ```yaml
 - hosts: all
   vars:
-    sssd_from_sources: true
+    sssd_from_sources: True
     sssd_version: 2.0.0
     sssd_default_build_options:
       - "--datadir=/usr/share"
@@ -215,7 +223,7 @@ SSSD from sources (in this example for Debian based systems).
       - "--with-sudo"
       - "--with-systemdunitdir=/lib/systemd/system"
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: permit
         auth_provider: local
         id_provider: local
@@ -237,7 +245,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 - hosts: all
   vars:
     sssd_config_type: none
-    sssd_from_sources: true
+    sssd_from_sources: True
     sssd_version: 2.0.0
   roles:
     - timorunge.sssd
@@ -248,7 +256,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 ```yaml
 - hosts: all
   vars:
-    sssd_from_sources: true
+    sssd_from_sources: True
     sssd_version: 2.0.0
     sssd_patches:
       fix-makefile:
@@ -257,7 +265,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
         state: present
     sssd_build_options: "{{ sssd_default_build_options }}"
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: permit
         auth_provider: local
         id_provider: local
@@ -277,7 +285,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
     sssd_init_template: roles/sssd/templates/sssd.service.j2
     sssd_service_template: roles/sssd/templates/sssd.init.j2
     sssd_config:
-      'domain/example.com':
+      "domain/example.com":
         access_provider: permit
         auth_provider: local
         id_provider: local
