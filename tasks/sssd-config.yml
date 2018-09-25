@@ -9,8 +9,9 @@
     src: "sssd.init-{{ ansible_os_family }}"
   notify:
     - restart sssd
-  when: not sssd_from_sources and
-        ansible_os_family == "RedHat"
+  when: >
+        (not sssd_from_sources) and
+        (ansible_os_family == "RedHat")
 
 - name: Configure SSSD service (from config)
   template:

@@ -2,13 +2,13 @@
 
 - name: Install SSSD build dependencies
   package:
-    name: "{{ sssd_build_dependency_pkgs | default(omit) }}"
+    name: "{{ sssd_build_dependency_pkgs }}"
     state: present
-    update_cache: yes
+    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version is version('2.7', '<'))) else 'yes' }}"
 
 - name: Install SSSD pip dependencies
   pip:
-    name: "{{ sssd_pip_dependency_pkgs | default(omit) }}"
+    name: "{{ sssd_pip_dependency_pkgs }}"
     state: present
 
 - name: Create SSSD group
