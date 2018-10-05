@@ -17,7 +17,7 @@ or higher in order to apply [patches](#3-apply-patches-to-the-source).
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.6.4
+pip install ansible==2.7.0
 ```
 
 All platform requirements are listed in the metadata file.
@@ -1007,7 +1007,7 @@ brings up the following containers with different environment settings:
 * Ubuntu 18.04 (Bionic Beaver)
 * Ubuntu 18.10 (Cosmic Cuttlefish)
 
-Ansible 2.6.4 is installed on all containers and a
+Ansible 2.7.0 is installed on all containers and a
 [test playbook](tests/test.yml) is getting applied.
 
 For further details and additional checks take a look at the
