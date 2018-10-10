@@ -1,5 +1,4 @@
-sssd
-====
+# sssd
 
 This role is installing and configuring the
 [SSSD](https://github.com/SSSD/sssd) service.
@@ -7,8 +6,7 @@ This role is installing and configuring the
 It's also providing the possibility to install and patch a custom SSSD
 version (from sources) according to your needs.
 
-Requirements
-------------
+## Requirements
 
 This role requires
 [Ansible 2.6.0](https://docs.ansible.com/ansible/devel/roadmap/ROADMAP_2_6.html)
@@ -22,15 +20,14 @@ pip install ansible==2.7.0
 
 All platform requirements are listed in the metadata file.
 
-Install
--------
+## Install
 
-* Use [tag 0.4.2](https://github.com/timorunge/ansible-sssd/releases/tag/0.4.2)
-for [SSSD >= 1.6.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_1_16_3.html)
-* Use [tag >= 0.5.0](https://github.com/timorunge/ansible-sssd/releases/tag/0.5.0)
-for [SSSD >= 2.0.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_2_0_0.html)
+- Use [tag 0.4.2](https://github.com/timorunge/ansible-sssd/releases/tag/0.4.2)
+  for [SSSD >= 1.6.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_1_16_3.html)
+- Use [tag >= 0.5.0](https://github.com/timorunge/ansible-sssd/releases/tag/0.5.0)
+  for [SSSD >= 2.0.0](https://docs.pagure.org/SSSD.sssd/users/relnotes/notes_2_0_0.html)
 
-**Recommendation**
+### Recommendation
 
 Stay with SSSD 1.6.x. The 2.0.0 release is working but I had to add some
 [patches](files/patches/2.0.0) to get it up and running. The patches are
@@ -43,7 +40,7 @@ libgirepository-1.0-1 & python-gi`, pip: `pyasn1, pyasn1-modules`).
 ansible-galaxy install timorunge.sssd[,version]
 ```
 
-### Note for RedHat
+#### Note for RedHat
 
 Some of the packages that this role installs are only available in the
 `rhel-6-server-optional-rpms` or `rhel-7-server-optional-rpms` repositories,
@@ -62,8 +59,7 @@ And for RHEL 7:
 subscription-manager repos --enable rhel-7-server-optional-rpms
 ```
 
-Role Variables
---------------
+## Role Variables
 
 This role is basically building out of a YAML hierarchy an working
 configuration file for the SSSD service.
@@ -126,8 +122,7 @@ sssd_patches:
 sssd_build_options: "{{ sssd_default_build_options }}"
 ```
 
-Examples
---------
+## Examples
 
 To keep the document lean the compile options are stripped.
 You can find the SSSD build options in [this document](#sssd-build-options).
@@ -297,8 +292,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
     - timorunge.sssd
 ```
 
-SSSD config options
--------------------
+## SSSD config options
 
 ```yaml
 # Format:
@@ -520,8 +514,7 @@ sssd_config:
   provider/deny/access:
 ```
 
-SSSD build options
-------------------
+## SSSD build options
 
 An overview of the build options for SSSD (2.0.0).
 
@@ -990,8 +983,7 @@ it to find libraries and programs with nonstandard names/locations.
 Report bugs to <sssd-devel@lists.fedorahosted.org>.
 ```
 
-Testing
--------
+## Testing
 
 [![Build Status](https://travis-ci.org/timorunge/ansible-sssd.svg?branch=master)](https://travis-ci.org/timorunge/ansible-sssd)
 
@@ -999,13 +991,13 @@ Tests are done with [Docker](https://www.docker.com) and
 [docker_test_runner](https://github.com/timorunge/docker-test-runner) which
 brings up the following containers with different environment settings:
 
-* CentOS 7
-* Debian 9.4 (Stretch)
-* Debian 10 (Buster)
-* Ubuntu 16.04 (Xenial Xerus)
-* Ubuntu 17.10 (Artful Aardvark)
-* Ubuntu 18.04 (Bionic Beaver)
-* Ubuntu 18.10 (Cosmic Cuttlefish)
+- CentOS 7
+- Debian 9.4 (Stretch)
+- Debian 10 (Buster)
+- Ubuntu 16.04 (Xenial Xerus)
+- Ubuntu 17.10 (Artful Aardvark)
+- Ubuntu 18.04 (Bionic Beaver)
+- Ubuntu 18.10 (Cosmic Cuttlefish)
 
 Ansible 2.7.0 is installed on all containers and a
 [test playbook](tests/test.yml) is getting applied.
@@ -1023,12 +1015,11 @@ curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/insta
 Since the build time on Travis is limited for public repositories the
 automated tests are limited to:
 
-* CentOS 7
-* Debian 9.4 (Stretch)
-* Ubuntu 18.04 (Bionic Beaver)
+- CentOS 7
+- Debian 9.4 (Stretch)
+- Ubuntu 18.04 (Bionic Beaver)
 
-Dependencies
-------------
+## Dependencies
 
 ### Ubuntu 16.04
 
@@ -1040,11 +1031,10 @@ installation of SSSD.
 pip install --upgrade pyopenssl
 ```
 
-License
--------
+## License
+
 BSD
 
-Author Information
-------------------
+## Author Information
 
 - Timo Runge
