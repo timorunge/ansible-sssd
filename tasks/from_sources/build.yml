@@ -10,6 +10,8 @@
         (sssd_patches.changed) or
         (sssd_force_build)) and
         (ansible_os_family == "RedHat")
+  tags:
+    - skip_ansible_lint
 
 - name: Build SSSD
   args:
@@ -21,3 +23,5 @@
         (sssd_source_files.changed) or
         (sssd_patches.changed) or
         (sssd_force_build)
+  tags:
+    - skip_ansible_lint

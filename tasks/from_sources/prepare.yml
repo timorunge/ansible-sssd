@@ -15,9 +15,13 @@
       - "--overwrite"
   register: sssd_source_files
   when: sssd_source_download.changed
+  tags:
+    - skip_ansible_lint
 
 - name: git init
   args:
     chdir: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}"
     creates: "{{ sssd_install_dir }}/build/sssd-sssd-{{ sssd_version_src_schema }}/.git/config"
   shell: git config --global user.email "root@$(hostname)" && git init && git add . && git commit -m "init sssd {{ sssd_version }}"
+  tags:
+    - skip_ansible_lint

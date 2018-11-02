@@ -1,6 +1,7 @@
 ---
 
-- fail:
+- name: Check for valid user- and group names
+  fail:
     msg: "The user ({{ sssd_user }})- or group ({{ sssd_group }}) name is not allowed."
   when: (sssd_user in sssd_forbidden_users) or
         (sssd_group in sssd_forbidden_groups)

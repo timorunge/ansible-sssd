@@ -2,5 +2,6 @@
 
 - name: Remove not required files
   file:
-    path: "{{ sssd_files_to_remove }}"
+    path: "{{ item }}"
     state: absent
+  loop: "{{ sssd_files_to_remove | flatten(levels=1) }}"

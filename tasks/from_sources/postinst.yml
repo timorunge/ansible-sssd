@@ -3,6 +3,8 @@
 - name: Run ldconfig
   command: ldconfig
   when: sssd_compile.changed
+  tags:
+    - skip_ansible_lint
 
 - name: Pam auth update
   ignore_errors: yes
@@ -10,6 +12,8 @@
   register: sssd_pam_update
   changed_when: sssd_pam_update.rc != 0
   when: ansible_os_family == "Debian"
+  tags:
+    - skip_ansible_lint
 
 - name: Set permissions
   file:
@@ -19,6 +23,8 @@
     path: "{{ item.key }}"
   loop: "{{ sssd_postinst_set_permissions | dict2items }}"
   when: sssd_postinst_set_permissions
+  tags:
+    - skip_ansible_lint
 
 - name: Add sss database to /etc/nsswitch.conf
   replace:

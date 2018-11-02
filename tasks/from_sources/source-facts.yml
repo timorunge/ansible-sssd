@@ -6,6 +6,7 @@
   changed_when: sssd_dpkg_architecture_exec.rc != 0
   when: ansible_os_family == "Debian"
 
-- set_fact:
+- name: Set dpkg architecture fact
+  set_fact:
     sssd_dpkg_architecture: "{{ sssd_dpkg_architecture_exec.stdout }}"
   when: ansible_os_family == "Debian"

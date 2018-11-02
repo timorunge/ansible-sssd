@@ -2,9 +2,10 @@
 
 galaxy_info:
   author: Timo Runge
+  company: N/A
   description: Custom SSSD installation and configuration including patch management for the SSSD source.
   role_name: sssd
-  license: BSD
+  license: BSD-3-Clause
   min_ansible_version: 2.6.0
   platforms:
   - name: EL
