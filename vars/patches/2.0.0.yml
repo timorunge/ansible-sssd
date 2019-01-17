@@ -1,6 +1,11 @@
 ---
 
 sssd_default_patches:
+  # https://github.com/SSSD/sssd/commit/1ee12b05570fcfb8e4190c9ec704c5563138344d
+  fix-compilation-with-curl-7.62.0:
+    dest_file: src/util/tev_curl.c
+    patch_file: "files/patches/{{ sssd_version }}/fix-compilation-with-curl-7.62.0.diff"
+    state: present
   # https://github.com/SSSD/sssd/commit/101934f29e6b76931b1499adc19ae7f7a976789d
   # https://github.com/SSSD/sssd/commit/677a93372e4b7359d19d7e55467fa5ccea4a80a3
   fix-makefile:

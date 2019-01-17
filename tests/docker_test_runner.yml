@@ -10,7 +10,7 @@ disable_logging: False
 
 docker_image_build_args:
   ansible_role: timorunge.sssd
-  ansible_version: 2.7.2
+  ansible_version: 2.7.5
 
 docker_image_path: "__PATH__/tests/docker"
 
