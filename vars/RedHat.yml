@@ -90,7 +90,7 @@ sssd_dirs:
 
 # Install architecture-dependent files in EPREFIX
 # Type: Str
-sssd_exec_prefix: /usr/local
+sssd_exec_prefix: "{{ '/usr/local' if sssd_from_sources else '/usr' }}"
 
 # SSSD default build options
 # Type: List
