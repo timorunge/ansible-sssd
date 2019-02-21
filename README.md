@@ -15,7 +15,7 @@ or higher in order to apply [patches](#3-apply-patches-to-the-source).
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.7.6
+pip install ansible==2.7.7
 ```
 
 All platform requirements are listed in the metadata file.
@@ -98,9 +98,9 @@ sssd_config_src_file: sssd.example.conf
 
 # Install SSSD from sources:
 # Type: Bool
-sssd_from_sources: False
+sssd_from_sources: false
 
-# Version definition (just relevant if `sssd_from_sources` is True):
+# Version definition (just relevant if `sssd_from_sources` is true):
 # Type: Str
 sssd_version: 2.0.0
 
@@ -154,13 +154,13 @@ You can find the SSSD build options in [this document](#sssd-build-options).
       "domain/example.com":
         access_provider: ipa
         auth_provider: ipa
-        cache_credentials: True
+        cache_credentials: true
         chpass_provider: ipa
         id_provider: ipa
         ipa_domain: example.com
         ipa_hostname: debian-eeBahPh3.example.com
         ipa_server: ipa-srv1.example.com
-        krb5_store_password_if_offline: True
+        krb5_store_password_if_offline: true
         ldap_tls_cacert: /etc/ipa/ca.crt
       sssd:
         config_file_version: 2
@@ -181,7 +181,7 @@ SSSD from sources (in this example for Debian based systems).
 ```yaml
 - hosts: all
   vars:
-    sssd_from_sources: True
+    sssd_from_sources: true
     sssd_version: 2.0.0
     sssd_default_build_options:
       - "--datadir=/usr/share"
@@ -240,7 +240,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 - hosts: all
   vars:
     sssd_config_type: none
-    sssd_from_sources: True
+    sssd_from_sources: true
     sssd_version: 2.0.0
   roles:
     - timorunge.sssd
@@ -251,7 +251,7 @@ or the [FreeIPA client](https://github.com/timorunge/ansible-freeipa-server).
 ```yaml
 - hosts: all
   vars:
-    sssd_from_sources: True
+    sssd_from_sources: true
     sssd_version: 2.0.0
     sssd_patches:
       fix-makefile:
@@ -999,7 +999,7 @@ brings up the following containers with different environment settings:
 - Ubuntu 18.04 (Bionic Beaver)
 - Ubuntu 18.10 (Cosmic Cuttlefish)
 
-Ansible 2.7.6 is installed on all containers and a
+Ansible 2.7.7 is installed on all containers and a
 [test playbook](tests/test.yml) is getting applied.
 
 For further details and additional checks take a look at the
@@ -1033,7 +1033,7 @@ pip install --upgrade pyopenssl
 
 ## License
 
-[BSD 3-Clause "New" or "Revised" License](https://spdx.org/licenses/BSD-3-Clause.html)
+[BSD 3-Clause "New" or "Revised" License](LICENSE)
 
 ## Author Information
 

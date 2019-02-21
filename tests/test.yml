@@ -1,7 +1,7 @@
 ---
 
 - hosts: localhost
-  gather_facts: True
+  gather_facts: true
   # Missing variables are set via `docker_test_runner`
   vars:
     sssd_config_type: config

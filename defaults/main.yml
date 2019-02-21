@@ -33,9 +33,9 @@ sssd_config_src_file: sssd.example.conf
 
 # Install SSSD from sources
 # Type: Bool
-sssd_from_sources: False
+sssd_from_sources: false
 
-# Version definition (just relevant if `sssd_from_sources` is True):
+# Version definition (just relevant if `sssd_from_sources` is true):
 # Type: Int
 sssd_version: 2.0.0
 
@@ -102,7 +102,7 @@ sssd_patches: "{{ sssd_default_patches }}"
 
 # Force a build
 # Type: Bool
-sssd_force_build: False
+sssd_force_build: false
 
 # Number of threads to use
 # Type: Int
