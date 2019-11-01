@@ -6,6 +6,10 @@
 # Type: Bool
 sssd_service_enabled: yes
 
+# Enable DNS lookup in sshd config
+# Type: Book
+sssd_manage_sshd_dns_service_lookup: false
+
 # Choose the config type: config (`sssd_config`), file (`sssd_config_src_file`)
 # or none (disable sssd.conf generation)
 # Type: Str

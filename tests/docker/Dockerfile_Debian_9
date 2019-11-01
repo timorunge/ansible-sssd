@@ -1,4 +1,4 @@
-FROM debian:9.4-slim
+FROM debian:9-slim
 LABEL maintainer="Timo Runge"
 
 ARG ansible_role=${ansible_role}

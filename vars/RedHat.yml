@@ -215,3 +215,7 @@ sssd_postinst_set_permissions:
     group: "{{ sssd_group }}"
     mode: !!str 0750
     owner: "{{ sssd_user }}"
+
+# SSH Service name
+# Type: Str
+sssd_ssh_service_name: sshd

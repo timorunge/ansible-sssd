@@ -15,7 +15,7 @@ or higher in order to apply [patches](#3-apply-patches-to-the-source).
 You can simply use pip to install (and define) a stable version:
 
 ```sh
-pip install ansible==2.7.7
+pip install ansible==2.7.9
 ```
 
 All platform requirements are listed in the metadata file.
@@ -72,6 +72,10 @@ description in this paragraph. For all variables, take a look at the
 # Enable / disable SSSD as a service
 # Type: Bool
 sssd_service_enabled: yes
+
+# Enable DNS lookup in sshd config
+# Type: Book
+sssd_manage_sshd_dns_service_lookup: false
 
 # Choose the config type: config (`sssd_config`), file (`sssd_config_src_file`)
 # or none (disable sssd.conf generation)
@@ -995,11 +999,10 @@ brings up the following containers with different environment settings:
 - Debian 9.4 (Stretch)
 - Debian 10 (Buster)
 - Ubuntu 16.04 (Xenial Xerus)
-- Ubuntu 17.10 (Artful Aardvark)
 - Ubuntu 18.04 (Bionic Beaver)
 - Ubuntu 18.10 (Cosmic Cuttlefish)
 
-Ansible 2.7.7 is installed on all containers and a
+Ansible 2.7.9 is installed on all containers and a
 [test playbook](tests/test.yml) is getting applied.
 
 For further details and additional checks take a look at the
