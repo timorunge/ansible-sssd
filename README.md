@@ -1016,7 +1016,7 @@ curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/insta
 ```
 
 Since the build time on Travis is limited for public repositories the
-automated tests are limited to:
+automated tests are limited to SSSD 2.0.0 on:
 
 - CentOS 7
 - Debian 9.4 (Stretch)

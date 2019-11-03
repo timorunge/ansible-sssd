@@ -22,9 +22,6 @@ docker_images:
 docker_container_environments:
   pkg:
     sssd_from_sources: "false"
-  "1_16_4":
-    sssd_from_sources: "true"
-    sssd_version: "1.16.4"
   "2_0_0":
     sssd_from_sources: "true"
     sssd_version: "2.0.0"
