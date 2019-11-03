@@ -34,3 +34,13 @@
   notify:
     - restart sssd
   when: sssd_config_type == "file"
+
+- name: Enable DNS lookup in sshd
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^UseDNS no"
+    line: "UseDNS yes"
+    backrefs: yes
+  notify:
+    - restart ssh
+  when: sssd_manage_sshd_dns_service_lookup

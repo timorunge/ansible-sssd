@@ -10,21 +10,18 @@ disable_logging: false
 
 docker_image_build_args:
   ansible_role: timorunge.sssd
-  ansible_version: 2.7.7
+  ansible_version: 2.7.9
 
 docker_image_path: "__PATH__/tests/docker"
 
 docker_images:
   - CentOS_7
-  - Debian_9_4
+  - Debian_9
   - Ubuntu_18_04
 
 docker_container_environments:
   pkg:
     sssd_from_sources: "false"
-  "1_16_3":
-    sssd_from_sources: "true"
-    sssd_version: "1.16.3"
   "2_0_0":
     sssd_from_sources: "true"
     sssd_version: "2.0.0"

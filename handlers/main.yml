@@ -10,3 +10,8 @@
     enabled: "{{ sssd_service_enabled | default('yes') }}"
     name: sssd
     state: "{{ sssd_service_state | default('restarted') }}"
+
+- name: restart ssh
+  service:
+    name: "{{ sssd_ssh_service_name }}"
+    state: restarted
