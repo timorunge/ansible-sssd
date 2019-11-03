@@ -3,7 +3,7 @@
 {% for section in sssd_config.keys() %}
 [{{ section }}]
 {% if sssd_config[section] %}
-{% for key, value in sssd_config[section].iteritems() %}
+{% for key, value in sssd_config[section].items() %}
 {{ key }} = {{ value }}
 {% endfor %}
 {% endif %}
