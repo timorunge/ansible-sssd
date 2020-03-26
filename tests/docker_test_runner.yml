@@ -18,9 +18,7 @@ docker_images:
   - CentOS_7
   - Debian_9
   - Debian_10
-  - Ubuntu_16_04
   - Ubuntu_18_04
-  - Ubuntu_18_10
 
 docker_container_environments:
   pkg:

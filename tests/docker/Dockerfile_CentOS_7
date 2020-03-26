@@ -24,7 +24,7 @@ RUN yum clean all
 RUN echo "NETWORKING=yes" >> /etc/sysconfig/network
 RUN echo "HOSTNAME=$(hostname)" >> /etc/sysconfig/network
 
-RUN pip install --upgrade pip setuptools
+RUN pip install --upgrade pip
 RUN pip install ansible=="${ansible_version}"
 RUN pip install ansible-lint coverage junit-xml splitter
 RUN ansible --version
