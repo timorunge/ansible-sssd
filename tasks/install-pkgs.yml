@@ -4,7 +4,7 @@
   package:
     name: "{{ sssd_pkgs }}"
     state: present
-    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version is version('2.7', '<'))) else 'yes' }}"
+    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version.full is version('2.7.0', '<'))) else 'yes' }}"
   delay: 10
   register: result
   retries: 3
