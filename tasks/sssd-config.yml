@@ -13,6 +13,23 @@
         (not sssd_from_sources) and
         (ansible_os_family == "RedHat")
 
+- name: Install authconfig
+  package:
+    name: authconfig
+    state: present
+  when: enable_pam_sss and ansible_os_family == 'RedHat'
+
+- name: Test if pam_sss is enabled
+  command: grep -R pam_sss /etc/pam.d
+  failed_when: false
+  changed_when: false
+  register: pam_sss_disabled
+  when: enable_pam_sss
+
+- name: Enable pam_sss
+  command: "{{ enable_pam_sss_command }}"
+  when: enable_pam_sss and pam_sss_disabled.rc != 0
+
 - name: Configure SSSD service (from config)
   template:
     dest: /etc/sssd/sssd.conf
