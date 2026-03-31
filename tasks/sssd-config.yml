@@ -10,7 +10,7 @@
   notify:
     - restart sssd
   when: >
-        (not sssd_from_sources) and
+        (sssd_from_sources) and
         (ansible_os_family == "RedHat")
 
 - name: Configure SSSD service (from config)
