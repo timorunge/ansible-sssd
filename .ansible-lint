@@ -1,8 +1,0 @@
----
-
-parseable: True
-quiet: True
-skip_list:
-  - formatting
-use_default_rules: True
-verbosity: 1

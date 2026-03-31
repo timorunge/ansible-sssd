@@ -1,3 +1,7 @@
+> **Status: Archived.**
+>
+> This repository is no longer maintained and is kept for reference only.
+
 # sssd
 
 This role is installing and configuring the
@@ -111,7 +115,7 @@ sssd_version: 2.0.0
 # Patches
 
 # In this section you can apply custom patches to SSSD.
-# You can find one example in the README.md and in the tests directory.
+# You can find one example in the README.md.
 # Type: Dict
 sssd_patches:
   fix-makefile:
@@ -987,48 +991,12 @@ it to find libraries and programs with nonstandard names/locations.
 Report bugs to <sssd-devel@lists.fedorahosted.org>.
 ```
 
-## Testing
-
-[![Build Status](https://travis-ci.org/timorunge/ansible-sssd.svg?branch=master)](https://travis-ci.org/timorunge/ansible-sssd)
-
-Tests are done with [Docker](https://www.docker.com) and
-[docker_test_runner](https://github.com/timorunge/docker-test-runner) which
-brings up the following containers with different environment settings:
-
-- CentOS 7
-- Debian 9.4 (Stretch)
-- Debian 10 (Buster)
-- Ubuntu 16.04 (Xenial Xerus)
-- Ubuntu 18.04 (Bionic Beaver)
-- Ubuntu 18.10 (Cosmic Cuttlefish)
-
-Ansible 2.7.9 is installed on all containers and a
-[test playbook](tests/test.yml) is getting applied.
-
-For further details and additional checks take a look at the
-[docker_test_runner configuration](tests/docker_test_runner.yml) and the
-[Docker entrypoint](tests/docker/docker-entrypoint.sh).
-
-```sh
-# Testing locally:
-curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
-./docker_test_runner.py -f tests/docker_test_runner.yml
-```
-
-Since the build time on Travis is limited for public repositories the
-automated tests are limited to SSSD 2.0.0 on:
-
-- CentOS 7
-- Debian 9.4 (Stretch)
-- Ubuntu 18.04 (Bionic Beaver)
-
 ## Dependencies
 
 ### Ubuntu 16.04
 
 On Ubuntu 16.04 you have to ensure that `pyopenssl` is
-[up to date](docker/Dockerfile_Ubuntu_16_04#L18) before the
-installation of SSSD.
+up to date before the installation of SSSD.
 
 ```sh
 pip install --upgrade pyopenssl
@@ -1037,7 +1005,3 @@ pip install --upgrade pyopenssl
 ## License
 
 [BSD 3-Clause "New" or "Revised" License](LICENSE)
-
-## Author Information
-
-- Timo Runge
