@@ -115,3 +115,7 @@ sssd_build_threads: 2
 # The default build options are stored in `vars/{{ ansible_os_family }}.yml`
 # Type: List
 sssd_build_options: "{{ sssd_default_build_options }}"
+
+# This will enable pam_sss
+# Type: Bool
+enable_pam_sss: true

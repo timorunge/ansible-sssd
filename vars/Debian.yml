@@ -254,3 +254,7 @@ sssd_postinst_set_permissions:
 # SSH Service name
 # Type: Str
 sssd_ssh_service_name: ssh
+
+# Command to enable pam_sss
+# Type: Str
+enable_pam_sss_command: pam-auth-update --enable sss
